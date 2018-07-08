@@ -1,7 +1,7 @@
 package hsim.controller;
 
-import hsim.lib.core.annotation.ValidationBody;
-import hsim.lib.core.annotation.ValidationParam;
+import hsim.checkpoint.core.annotation.ValidationBody;
+import hsim.checkpoint.core.annotation.ValidationParam;
 import hsim.test.model.CommonReqModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 @RestController
 @RequestMapping("/main")
-public class MainController extends ParentController {
+public class MainController {
 
 
     @PostMapping("/**")

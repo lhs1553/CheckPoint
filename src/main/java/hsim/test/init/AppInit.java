@@ -1,9 +1,9 @@
 package hsim.test.init;
 
-import hsim.lib.core.component.validationRule.rule.AssistType;
-import hsim.lib.core.component.validationRule.type.BasicCheckRule;
-import hsim.lib.core.component.validationRule.type.StandardValueType;
-import hsim.lib.core.helper.CheckPointHelper;
+import hsim.checkpoint.core.component.validationRule.rule.AssistType;
+import hsim.checkpoint.core.component.validationRule.type.BasicCheckRule;
+import hsim.checkpoint.core.component.validationRule.type.StandardValueType;
+import hsim.checkpoint.core.helper.CheckPointHelper;
 import hsim.test.callback.MandatoryCallback;
 import hsim.test.rule.TestRule;
 import lombok.extern.slf4j.Slf4j;

@@ -1,29 +1,25 @@
-package hsim.test.rule;
+package hsim.checkpoint.core.component.validationRule.check;
 
-import hsim.checkpoint.core.component.validationRule.check.BaseValidationCheck;
 import hsim.checkpoint.core.domain.ValidationData;
 import hsim.checkpoint.exception.ValidationLibException;
 import lombok.NoArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 
+import java.util.List;
+
 @NoArgsConstructor
-@Slf4j
-public class TestRule extends BaseValidationCheck {
+public class WhiteListCheck extends BaseValidationCheck {
 
 
     @Override
     public boolean check(Object value, Object standardValue) {
+        List<String> whiteList = (List<String>) standardValue;
 
-        log.info("value : " + value);
-        log.info("standardValue : " + standardValue);
-
-        return true;
+        return whiteList.contains(String.valueOf(value).trim());
     }
 
     @Override
     public void exception(ValidationData param, Object inputValue, Object standardValue) {
-        throw new ValidationLibException("logging", HttpStatus.BAD_REQUEST);
+        throw new ValidationLibException(inputValue + " is bad", HttpStatus.NOT_ACCEPTABLE);
     }
-
 }
