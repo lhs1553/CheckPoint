@@ -1,0 +1,10 @@
+/.classpath
+/.project
+/.gradle
+/.settings
+*.class
+/.idea/
+/out/
+bin
+build/
+checkpoint/
