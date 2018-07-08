@@ -1,5 +1,6 @@
 package hsim.checkpoint.core.component.validationRule.rule;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import hsim.checkpoint.core.component.validationRule.check.BaseValidationCheck;
 import hsim.checkpoint.core.component.validationRule.type.BasicCheckRule;
 import hsim.checkpoint.core.component.validationRule.type.StandardValueType;
@@ -22,6 +23,8 @@ public class ValidationRule {
     private String overlapBanRuleName;
     private Object standardValue;
     private StandardValueType standardValueType;
+
+    @JsonIgnore
     private BaseValidationCheck validationCheck;
 
     private AssistType assistType;

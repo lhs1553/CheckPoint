@@ -28,7 +28,7 @@ public class ValidationDataRepository {
     private List<ValidationData> datas;
     private Map<String, ReqUrl> urlMap;
 
-    private String filePath = "hsim/validation.json";
+    private String filePath = "checkpoint/validation.json";
 
     private long currentMaxId = 0;
 
