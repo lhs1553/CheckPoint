@@ -1,6 +1,6 @@
-package hsim.checkpoint.core.config;
+package hsim.checkpoint.config;
 
-import hsim.checkpoint.core.interceptor.ValidationResolver;
+import hsim.checkpoint.interceptor.ValidationResolver;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 

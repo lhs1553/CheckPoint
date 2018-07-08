@@ -1,4 +1,4 @@
-package hsim.checkpoint.core.util;
+package hsim.checkpoint.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import hsim.checkpoint.exception.ValidationLibException;

@@ -1,4 +1,4 @@
-package hsim.checkpoint.core.type;
+package hsim.checkpoint.type;
 
 public enum MsgCheckType {
     URL, FUNCTION

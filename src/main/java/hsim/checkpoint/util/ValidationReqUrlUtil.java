@@ -1,4 +1,4 @@
-package hsim.checkpoint.core.util;
+package hsim.checkpoint.util;
 
 import hsim.checkpoint.core.domain.ReqUrl;
 import hsim.checkpoint.core.domain.ValidationData;

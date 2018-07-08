@@ -1,4 +1,4 @@
-package hsim.checkpoint.core.interceptor;
+package hsim.checkpoint.interceptor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hsim.checkpoint.core.annotation.ValidationBody;
@@ -6,11 +6,11 @@ import hsim.checkpoint.core.annotation.ValidationParam;
 import hsim.checkpoint.core.component.ComponentMap;
 import hsim.checkpoint.core.msg.MsgChecker;
 import hsim.checkpoint.core.msg.MsgSaver;
-import hsim.checkpoint.core.config.ValidationConfig;
+import hsim.checkpoint.config.ValidationConfig;
 import hsim.checkpoint.core.domain.BasicCheckInfo;
-import hsim.checkpoint.core.type.ParamType;
-import hsim.checkpoint.core.util.ParameterMapper;
-import hsim.checkpoint.core.util.ValidationObjUtil;
+import hsim.checkpoint.type.ParamType;
+import hsim.checkpoint.util.ParameterMapper;
+import hsim.checkpoint.util.ValidationObjUtil;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;

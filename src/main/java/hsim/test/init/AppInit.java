@@ -3,7 +3,7 @@ package hsim.test.init;
 import hsim.checkpoint.core.component.validationRule.rule.AssistType;
 import hsim.checkpoint.core.component.validationRule.type.BasicCheckRule;
 import hsim.checkpoint.core.component.validationRule.type.StandardValueType;
-import hsim.checkpoint.core.helper.CheckPointHelper;
+import hsim.checkpoint.helper.CheckPointHelper;
 import hsim.test.callback.MandatoryCallback;
 import hsim.test.rule.TestRule;
 import lombok.extern.slf4j.Slf4j;

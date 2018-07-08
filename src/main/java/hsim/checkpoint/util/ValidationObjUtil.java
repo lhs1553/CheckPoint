@@ -1,4 +1,4 @@
-package hsim.checkpoint.core.util;
+package hsim.checkpoint.util;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;

@@ -1,7 +1,7 @@
 package hsim.checkpoint.core.component.validationRule.check;
 
 import hsim.checkpoint.core.domain.ValidationData;
-import hsim.checkpoint.core.util.ValidationObjUtil;
+import hsim.checkpoint.util.ValidationObjUtil;
 import hsim.checkpoint.exception.ValidationLibException;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;

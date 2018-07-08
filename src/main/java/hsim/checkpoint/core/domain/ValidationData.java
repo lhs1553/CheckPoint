@@ -2,9 +2,9 @@ package hsim.checkpoint.core.domain;
 
 import hsim.checkpoint.core.component.DetailParam;
 import hsim.checkpoint.core.component.validationRule.rule.ValidationRule;
-import hsim.checkpoint.core.sort.RuleSorter;
-import hsim.checkpoint.core.type.ParamType;
-import hsim.checkpoint.core.util.ValidationObjUtil;
+import hsim.checkpoint.core.component.validationRule.sort.RuleSorter;
+import hsim.checkpoint.type.ParamType;
+import hsim.checkpoint.util.ValidationObjUtil;
 import hsim.checkpoint.exception.ValidationLibException;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;

@@ -1,6 +1,6 @@
-package hsim.checkpoint.core.config;
+package hsim.checkpoint.config;
 
-import hsim.checkpoint.core.type.MsgCheckType;
+import hsim.checkpoint.type.MsgCheckType;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,6 +1,6 @@
 package hsim.checkpoint.core.component;
 
-import hsim.checkpoint.core.util.AnnotationUtil;
+import hsim.checkpoint.util.AnnotationUtil;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Method;

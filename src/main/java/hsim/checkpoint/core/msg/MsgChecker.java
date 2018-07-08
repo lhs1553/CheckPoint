@@ -3,12 +3,12 @@ package hsim.checkpoint.core.msg;
 import hsim.checkpoint.core.component.ComponentMap;
 import hsim.checkpoint.core.component.validationRule.callback.ValidationInvalidCallback;
 import hsim.checkpoint.core.component.validationRule.type.BasicCheckRule;
-import hsim.checkpoint.core.config.ValidationConfig;
+import hsim.checkpoint.config.ValidationConfig;
 import hsim.checkpoint.core.domain.ValidationData;
 import hsim.checkpoint.core.store.ValidationRuleStore;
 import hsim.checkpoint.core.store.ValidationStore;
 import hsim.checkpoint.core.domain.BasicCheckInfo;
-import hsim.checkpoint.core.type.MsgCheckType;
+import hsim.checkpoint.type.MsgCheckType;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;

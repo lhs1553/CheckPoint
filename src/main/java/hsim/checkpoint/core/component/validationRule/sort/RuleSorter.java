@@ -1,4 +1,4 @@
-package hsim.checkpoint.core.sort;
+package hsim.checkpoint.core.component.validationRule.sort;
 
 import hsim.checkpoint.core.component.validationRule.rule.ValidationRule;
 

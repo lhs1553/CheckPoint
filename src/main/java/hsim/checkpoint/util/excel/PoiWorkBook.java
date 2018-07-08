@@ -1,6 +1,6 @@
-package hsim.checkpoint.core.util.excel;
+package hsim.checkpoint.util.excel;
 
-import hsim.checkpoint.core.util.ValidationFileUtil;
+import hsim.checkpoint.util.ValidationFileUtil;
 import hsim.checkpoint.exception.ValidationLibException;
 import lombok.Getter;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;

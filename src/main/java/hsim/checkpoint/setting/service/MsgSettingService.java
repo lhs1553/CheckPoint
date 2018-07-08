@@ -2,7 +2,7 @@ package hsim.checkpoint.setting.service;
 
 import hsim.checkpoint.core.domain.ReqUrl;
 import hsim.checkpoint.core.domain.ValidationData;
-import hsim.checkpoint.core.type.ParamType;
+import hsim.checkpoint.type.ParamType;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.List;

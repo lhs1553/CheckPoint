@@ -1,4 +1,4 @@
-package hsim.checkpoint.core.util;
+package hsim.checkpoint.util;
 
 import hsim.checkpoint.core.component.DetailParam;
 import lombok.extern.slf4j.Slf4j;

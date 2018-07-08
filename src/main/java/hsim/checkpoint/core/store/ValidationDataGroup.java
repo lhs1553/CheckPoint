@@ -2,7 +2,7 @@ package hsim.checkpoint.core.store;
 
 import hsim.checkpoint.core.component.validationRule.rule.ValidationRule;
 import hsim.checkpoint.core.domain.ValidationData;
-import hsim.checkpoint.core.type.ParamType;
+import hsim.checkpoint.type.ParamType;
 import lombok.Getter;
 
 import java.util.ArrayList;

@@ -1,12 +1,12 @@
 package hsim.checkpoint.core.store;
 
 import hsim.checkpoint.core.component.ComponentMap;
-import hsim.checkpoint.core.config.ValidationConfig;
+import hsim.checkpoint.config.ValidationConfig;
 import hsim.checkpoint.core.domain.ReqUrl;
 import hsim.checkpoint.core.domain.ValidationData;
 import hsim.checkpoint.core.repository.ValidationDataRepository;
-import hsim.checkpoint.core.type.MsgCheckType;
-import hsim.checkpoint.core.type.ParamType;
+import hsim.checkpoint.type.MsgCheckType;
+import hsim.checkpoint.type.ParamType;
 import hsim.checkpoint.exception.ValidationLibException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

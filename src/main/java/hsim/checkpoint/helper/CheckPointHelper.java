@@ -1,4 +1,4 @@
-package hsim.checkpoint.core.helper;
+package hsim.checkpoint.helper;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,8 +10,8 @@ import hsim.checkpoint.core.component.validationRule.rule.AssistType;
 import hsim.checkpoint.core.component.validationRule.rule.ValidationRule;
 import hsim.checkpoint.core.component.validationRule.type.BasicCheckRule;
 import hsim.checkpoint.core.component.validationRule.type.StandardValueType;
-import hsim.checkpoint.core.config.ValidationConfig;
-import hsim.checkpoint.core.interceptor.ValidationResolver;
+import hsim.checkpoint.config.ValidationConfig;
+import hsim.checkpoint.interceptor.ValidationResolver;
 import hsim.checkpoint.core.repository.ValidationDataRepository;
 import hsim.checkpoint.core.store.ValidationRuleStore;
 

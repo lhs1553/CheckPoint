@@ -1,7 +1,7 @@
 package hsim.checkpoint.core.component;
 
 import hsim.checkpoint.core.domain.ReqUrl;
-import hsim.checkpoint.core.util.AnnotationUtil;
+import hsim.checkpoint.util.AnnotationUtil;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,4 +1,4 @@
-package hsim.checkpoint.core.type;
+package hsim.checkpoint.type;
 
 import hsim.checkpoint.core.domain.ReqUrl;
 import lombok.Getter;

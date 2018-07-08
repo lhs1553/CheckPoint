@@ -1,4 +1,4 @@
-package hsim.checkpoint.core.util;
+package hsim.checkpoint.util;
 
 import java.lang.annotation.Annotation;
 import java.util.Arrays;

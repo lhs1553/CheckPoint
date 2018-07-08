@@ -1,4 +1,4 @@
-package hsim.checkpoint.core.init;
+package hsim.checkpoint.init;
 
 import hsim.checkpoint.core.component.ComponentMap;
 import hsim.checkpoint.core.msg.MsgSaver;

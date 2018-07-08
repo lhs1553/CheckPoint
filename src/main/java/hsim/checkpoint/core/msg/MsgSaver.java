@@ -4,14 +4,14 @@ import hsim.checkpoint.core.annotation.ValidationBody;
 import hsim.checkpoint.core.annotation.ValidationParam;
 import hsim.checkpoint.core.component.ComponentMap;
 import hsim.checkpoint.core.component.DetailParam;
-import hsim.checkpoint.core.config.ValidationConfig;
+import hsim.checkpoint.config.ValidationConfig;
 import hsim.checkpoint.core.domain.ReqUrl;
 import hsim.checkpoint.core.domain.ValidationData;
 import hsim.checkpoint.core.repository.ValidationDataRepository;
 import hsim.checkpoint.core.store.ValidationStore;
-import hsim.checkpoint.core.type.ParamType;
-import hsim.checkpoint.core.util.AnnotationScanner;
-import hsim.checkpoint.core.util.excel.TypeCheckUtil;
+import hsim.checkpoint.type.ParamType;
+import hsim.checkpoint.util.AnnotationScanner;
+import hsim.checkpoint.util.excel.TypeCheckUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Field;

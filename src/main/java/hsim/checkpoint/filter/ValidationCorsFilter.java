@@ -1,4 +1,4 @@
-package hsim.checkpoint.core.filter;
+package hsim.checkpoint.filter;
 
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;

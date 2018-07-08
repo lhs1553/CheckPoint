@@ -1,7 +1,7 @@
 package hsim.checkpoint.setting.session;
 
 import hsim.checkpoint.core.component.ComponentMap;
-import hsim.checkpoint.core.config.ValidationConfig;
+import hsim.checkpoint.config.ValidationConfig;
 import hsim.checkpoint.exception.ValidationLibException;
 import org.springframework.http.HttpStatus;
 
