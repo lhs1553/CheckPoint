@@ -20,4 +20,12 @@ public class ReqUrl{
         return method + ":" + url;
     }
 
+    public String getSheetName(int idx){
+        String name=  method + "|" + url.replace("/" , "|");
+        if(name.length() > 30){
+            return name.substring(0, 29) + idx;
+        }
+        return name;
+    }
+
 }

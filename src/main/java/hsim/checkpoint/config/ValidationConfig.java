@@ -21,4 +21,10 @@ public class ValidationConfig {
     @Value("${validation.setting.password:taeon}")
     private String authToken;
 
+    @Value("${validation.save.max.deeplevel:15}")
+    private int maxDeepLevel;
+
+    @Value("${validation.scan.annotation:true}")
+    private boolean scanAnnotation;
+
 }

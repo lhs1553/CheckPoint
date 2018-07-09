@@ -1,5 +1,7 @@
 package hsim.checkpoint.util;
 
+import hsim.checkpoint.config.ValidationConfig;
+import hsim.checkpoint.core.component.ComponentMap;
 import hsim.checkpoint.core.component.DetailParam;
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,9 +16,12 @@ import java.util.List;
 @Slf4j
 public class AnnotationScanner {
 
+    private ValidationConfig validationConfig = ComponentMap.get(ValidationConfig.class);
+
     private List<Class<?>> allClass = null;
 
     public AnnotationScanner() {
+        if(!this.validationConfig.isScanAnnotation()){ return; }
         this.allClass = getDirClassList(new File(ClassLoader.getSystemClassLoader().getResource("").getFile()), null);
     }
 
@@ -28,7 +33,6 @@ public class AnnotationScanner {
                 if (file.isDirectory()) {
                     classList.addAll(getDirClassList(file, parent == null ? file.getName() : parent + "/" + file.getName()));
                 } else {
-                    log.info(parent + "/" + file.getName());
                     String filePath = parent + "/" + file.getName();
                     try {
                         classList.add(Class.forName(filePath.replaceAll("/", ".").replaceAll(".class", "")));

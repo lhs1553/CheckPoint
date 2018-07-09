@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class TypeCheckUtil {
 
     private static Class<?>[] PRIMITIVE_CLASS_TYPE = {
-            java.lang.Double.class, java.lang.Float.class, java.lang.Long.class, java.lang.Integer.class, java.lang.Byte.class, java.lang.String.class, java.lang.Short.class, java.lang.Character.class, java.util.List.class
+            java.lang.Double.class, java.lang.Float.class, java.lang.Long.class, java.lang.Integer.class, java.lang.Byte.class, java.lang.String.class, java.lang.Short.class, java.lang.Character.class, java.util.List.class,
     };
 
     private static Class<?>[] NUMBER_CLASS_TYPE = {
@@ -21,9 +21,12 @@ public class TypeCheckUtil {
             double.class, float.class, long.class, int.class, byte.class, short.class
     };
 
+    private static String[] BASIC_PACKAGE_PREFIX ={ "java", "sun", "org" };
+
     private static List<Class<?>> PRIMITIVE_CLASS_LIST = Arrays.stream(PRIMITIVE_CLASS_TYPE).collect(Collectors.toList());
 
     private static List<Class<?>> NUMBER_CLASS_LIST = Arrays.stream(NUMBER_CLASS_TYPE).collect(Collectors.toList());
+    private static List<String> BASIC_PACKAGE_PREFIX_LIST = Arrays.stream(BASIC_PACKAGE_PREFIX).collect(Collectors.toList());
 
     public static boolean isObjClass(Field field) {
         return isObjClass(field.getType());
@@ -38,10 +41,14 @@ public class TypeCheckUtil {
     }
 
     public static boolean isObjClass(Class<?> type) {
-        if (type.isPrimitive() || type.isEnum()) {
+        if (type.isPrimitive() || type.isEnum() || type.isArray() ) {
             return false;
         }
-        return !PRIMITIVE_CLASS_LIST.contains(type);
+
+        String block = BASIC_PACKAGE_PREFIX_LIST.stream().filter( prefix -> type.getName().startsWith(prefix)).findAny().orElse(null);
+        if( block != null){ return false; }
+
+        return !PRIMITIVE_CLASS_LIST.contains(type) ;
     }
 
     public static boolean isListClass(Class<?> type) {

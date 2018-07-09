@@ -93,7 +93,7 @@ public class MsgExcelServiceImpl implements MsgExcelService {
     }
 
     private void createReqUrlSheet(PoiWorkBook workBook, ReqUrl reqUrl) {
-        PoiWorkSheet sheet = workBook.createSheet(reqUrl.getMethod() + reqUrl.getUrl().replaceAll("/", "|"));
+        PoiWorkSheet sheet = workBook.createSheet(reqUrl.getSheetName(workBook.getWorkBook().getNumberOfSheets()));
 
         sheet.nextRow();
         sheet.createTitleCells(1.5, reqUrl.getMethod(), reqUrl.getUrl());

@@ -29,10 +29,12 @@ public class MsgSaver {
     }
 
     public void annotationScan(){
+        if(!this.validationConfig.isScanAnnotation()){ return; }
         List<DetailParam> annoParams = this.annotationScanner.getParameterWithAnnotation(ValidationParam.class);
         this.initDetailParams(ParamType.QUERY_PARAM, annoParams);
         List<DetailParam> annoBody = this.annotationScanner.getParameterWithAnnotation(ValidationBody.class);
         this.initDetailParams(ParamType.BODY, annoBody);
+        log.info("[ANNOTATION_SCAN] Complete");
     }
 
 
@@ -80,6 +82,10 @@ public class MsgSaver {
 
 
     private void saveParameter(DetailParam detailParam, ParamType paramType, ReqUrl reqUrl, ValidationData parent, Class<?> type, int deepLevel) {
+        if(deepLevel > this.validationConfig.getMaxDeepLevel()){
+           log.info(detailParam.getParameter().getType().getName() + "deep level " + deepLevel +" param : " + type.getName());
+           return;
+        }
         for (Field field : type.getDeclaredFields()) {
             ValidationData param = this.validationDataRepository.findByParamTypeAndUrlAndMethodAndNameAndParentId(paramType, reqUrl.getUrl(), reqUrl.getMethod(), field.getName(), parent == null ? null : parent.getId());
             if (param == null) {
