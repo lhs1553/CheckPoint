@@ -1,10 +1,10 @@
 package hsim.checkpoint.core.msg;
 
+import hsim.checkpoint.config.ValidationConfig;
 import hsim.checkpoint.core.annotation.ValidationBody;
 import hsim.checkpoint.core.annotation.ValidationParam;
 import hsim.checkpoint.core.component.ComponentMap;
 import hsim.checkpoint.core.component.DetailParam;
-import hsim.checkpoint.config.ValidationConfig;
 import hsim.checkpoint.core.domain.ReqUrl;
 import hsim.checkpoint.core.domain.ValidationData;
 import hsim.checkpoint.core.repository.ValidationDataRepository;
@@ -20,7 +20,6 @@ import java.util.List;
 @Slf4j
 public class MsgSaver {
 
-    private AnnotationScanner annotationScanner = ComponentMap.get(AnnotationScanner.class);
     private ValidationDataRepository validationDataRepository = ComponentMap.get(ValidationDataRepository.class);
     private ValidationStore validationStore = ComponentMap.get(ValidationStore.class);
     private ValidationConfig validationConfig = ComponentMap.get(ValidationConfig.class);
@@ -28,11 +27,15 @@ public class MsgSaver {
     public MsgSaver() {
     }
 
-    public void annotationScan(){
-        if(!this.validationConfig.isScanAnnotation()){ return; }
-        List<DetailParam> annoParams = this.annotationScanner.getParameterWithAnnotation(ValidationParam.class);
+    public void annotationScan() {
+        if (!this.validationConfig.isScanAnnotation()) {
+            return;
+        }
+        AnnotationScanner annotationScanner = ComponentMap.get(AnnotationScanner.class);
+
+        List<DetailParam> annoParams = annotationScanner.getParameterWithAnnotation(ValidationParam.class);
         this.initDetailParams(ParamType.QUERY_PARAM, annoParams);
-        List<DetailParam> annoBody = this.annotationScanner.getParameterWithAnnotation(ValidationBody.class);
+        List<DetailParam> annoBody = annotationScanner.getParameterWithAnnotation(ValidationBody.class);
         this.initDetailParams(ParamType.BODY, annoBody);
         log.info("[ANNOTATION_SCAN] Complete");
     }
@@ -82,9 +85,9 @@ public class MsgSaver {
 
 
     private void saveParameter(DetailParam detailParam, ParamType paramType, ReqUrl reqUrl, ValidationData parent, Class<?> type, int deepLevel) {
-        if(deepLevel > this.validationConfig.getMaxDeepLevel()){
-           log.info(detailParam.getParameter().getType().getName() + "deep level " + deepLevel +" param : " + type.getName());
-           return;
+        if (deepLevel > this.validationConfig.getMaxDeepLevel()) {
+            log.info(detailParam.getParameter().getType().getName() + "deep level " + deepLevel + " param : " + type.getName());
+            return;
         }
         for (Field field : type.getDeclaredFields()) {
             ValidationData param = this.validationDataRepository.findByParamTypeAndUrlAndMethodAndNameAndParentId(paramType, reqUrl.getUrl(), reqUrl.getMethod(), field.getName(), parent == null ? null : parent.getId());
