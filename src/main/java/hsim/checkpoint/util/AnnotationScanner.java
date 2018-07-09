@@ -20,14 +20,14 @@ public class AnnotationScanner {
 
     private List<Class<?>> allClass = null;
 
+    private File getClassRootDirectory(){
+        File hsim = new File(ClassLoader.getSystemClassLoader().getResource("hsim").getFile());
+        return hsim.getParentFile();
+    }
+
     public AnnotationScanner() {
-        log.info("scan : " + this.validationConfig.isScanAnnotation());
-        log.info("class loader : " + ClassLoader.getSystemClassLoader());
-        log.info("class loader : " + ClassLoader.getSystemClassLoader().toString());
-        log.info("class loader : " + ClassLoader.getSystemClassLoader().getResource("/"));
         if(!this.validationConfig.isScanAnnotation()){ return; }
-        log.info("class loader : " + ClassLoader.getSystemClassLoader().getResource("").getFile());
-        this.allClass = getDirClassList(new File(ClassLoader.getSystemClassLoader().getResource("").getFile()), null);
+        this.allClass = getDirClassList(this.getClassRootDirectory(), null);
     }
 
     private List<Class<?>> getDirClassList(File dir, String parent) {
@@ -39,6 +39,7 @@ public class AnnotationScanner {
                     classList.addAll(getDirClassList(file, parent == null ? file.getName() : parent + "/" + file.getName()));
                 } else {
                     String filePath = parent + "/" + file.getName();
+                    log.info(filePath);
                     log.info(filePath);
                     try {
                         classList.add(Class.forName(filePath.replaceAll("/", ".").replaceAll(".class", "")));
