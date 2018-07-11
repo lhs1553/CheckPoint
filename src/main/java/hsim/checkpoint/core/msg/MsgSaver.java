@@ -27,25 +27,22 @@ public class MsgSaver {
     public MsgSaver() {
     }
 
-    public void annotationScan() {
-        if (!this.validationConfig.isScanAnnotation()) {
-            return;
-        }
-        AnnotationScanner annotationScanner = ComponentMap.get(AnnotationScanner.class);
+    public void annotationScan(final int maxDeepLeel) {
 
+        AnnotationScanner annotationScanner = ComponentMap.get(AnnotationScanner.class);
         List<DetailParam> annoParams = annotationScanner.getParameterWithAnnotation(ValidationParam.class);
-        this.initDetailParams(ParamType.QUERY_PARAM, annoParams);
+        this.initDetailParams(ParamType.QUERY_PARAM, annoParams, maxDeepLeel);
         List<DetailParam> annoBody = annotationScanner.getParameterWithAnnotation(ValidationBody.class);
-        this.initDetailParams(ParamType.BODY, annoBody);
+        this.initDetailParams(ParamType.BODY, annoBody, maxDeepLeel);
         log.info("[ANNOTATION_SCAN] Complete");
     }
 
 
-    private void initDetailParams(ParamType paramType, List<DetailParam> params) {
+    private void initDetailParams(ParamType paramType, List<DetailParam> params, final int maxDeepLevel) {
         params.forEach(param -> {
             List<ReqUrl> urls = param.getReqUrls();
             urls.forEach(url -> {
-                this.saveParameter(param, paramType, url, null, param.getParameter().getType(), 0);
+                this.saveParameter(param, paramType, url, null, param.getParameter().getType(), 0, maxDeepLevel);
             });
         });
     }
@@ -57,7 +54,7 @@ public class MsgSaver {
 
         List<ValidationData> datas = this.validationDataRepository.findByParamTypeAndUrlAndMethod(paramType, reqUrl.getUrl(), reqUrl.getMethod());
         if (datas.isEmpty()) {
-            this.saveParameter(null, paramType, reqUrl, null, type, 0);
+            this.saveParameter(null, paramType, reqUrl, null, type, 0, this.validationConfig.getMaxDeepLevel());
         }
         this.validationDataRepository.flush();
         this.validationStore.refresh();
@@ -84,8 +81,8 @@ public class MsgSaver {
     }
 
 
-    private void saveParameter(DetailParam detailParam, ParamType paramType, ReqUrl reqUrl, ValidationData parent, Class<?> type, int deepLevel) {
-        if (deepLevel > this.validationConfig.getMaxDeepLevel()) {
+    private void saveParameter(DetailParam detailParam, ParamType paramType, ReqUrl reqUrl, ValidationData parent, Class<?> type, int deepLevel, final int maxDeepLevel) {
+        if (deepLevel > maxDeepLevel) {
             log.info(detailParam.getParameter().getType().getName() + "deep level " + deepLevel + " param : " + type.getName());
             return;
         }
@@ -100,7 +97,7 @@ public class MsgSaver {
             param = this.validationDataRepository.save(param);
 
             if (param.isObj()) {
-                this.saveParameter(detailParam, paramType, reqUrl, param, param.getTypeClass(), deepLevel + 1);
+                this.saveParameter(detailParam, paramType, reqUrl, param, param.getTypeClass(), deepLevel + 1, maxDeepLevel);
             }
         }
     }

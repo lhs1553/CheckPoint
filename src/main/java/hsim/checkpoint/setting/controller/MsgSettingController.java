@@ -5,6 +5,7 @@ import hsim.checkpoint.config.ValidationConfig;
 import hsim.checkpoint.config.ValidationIntercepterConfig;
 import hsim.checkpoint.core.domain.ReqUrl;
 import hsim.checkpoint.core.domain.ValidationData;
+import hsim.checkpoint.core.msg.MsgSaver;
 import hsim.checkpoint.filter.ValidationCorsFilter;
 import hsim.checkpoint.init.InitCheckPoint;
 import hsim.checkpoint.util.ParameterMapper;
@@ -32,6 +33,12 @@ public class MsgSettingController {
     private MsgSettingService msgSettingService = ComponentMap.get(MsgSettingServiceImpl.class);
     private MsgExcelService msgExcelService = ComponentMap.get(MsgExcelServiceImpl.class);
     private ValidationSessionComponent validationSessionComponent = ComponentMap.get(ValidationSessionComponent.class);
+    private MsgSaver msgSaver = ComponentMap.get(MsgSaver.class);
+
+    @GetMapping("/setting/scan/{maxdeeplevel}")
+    public void annotationScan(@PathVariable int maxdeeplevel,  HttpServletRequest req, HttpServletResponse res) {
+        this.msgSaver.annotationScan(maxdeeplevel);
+    }
 
     @PostMapping("/setting/auth")
     public ValidationSessionInfo login(@RequestBody ValidationLoginInfo info, HttpServletRequest req, HttpServletResponse res) {
