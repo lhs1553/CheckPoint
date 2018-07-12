@@ -1,30 +1,21 @@
 package hsim.checkpoint.init;
 
 import hsim.checkpoint.core.component.ComponentMap;
-import hsim.checkpoint.core.msg.MsgSaver;
 import hsim.checkpoint.core.repository.ValidationDataRepository;
 import hsim.checkpoint.core.store.ValidationStore;
+import hsim.checkpoint.util.AnnotationScanner;
+import lombok.extern.slf4j.Slf4j;
 
-import java.util.Arrays;
-
+@Slf4j
 public class InitCheckPoint {
-
-    private static String[] jarPath ;
-
-    public static String getJarPath(){
-        if(jarPath == null) { return null; }
-        return Arrays.stream(jarPath).filter(path -> path.endsWith(".jar")).findFirst().orElse(null);
-    }
 
     private ValidationDataRepository validationDataRepository = ComponentMap.get(ValidationDataRepository.class);
     private ValidationStore validationStore = ComponentMap.get(ValidationStore.class);
+    private AnnotationScanner annotationScanner = ComponentMap.get(AnnotationScanner.class);
 
-    public static void init(String[] args){
-        InitCheckPoint.jarPath = args;
+    public InitCheckPoint() {
+        this.validationDataRepository.flush();
+        this.validationStore.refresh();
     }
 
-    public InitCheckPoint(){
-       this.validationDataRepository.flush();
-       this.validationStore.refresh();
-    }
 }

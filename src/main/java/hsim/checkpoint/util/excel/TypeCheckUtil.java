@@ -40,6 +40,10 @@ public class TypeCheckUtil {
         return isNumberClass(field.getType());
     }
 
+    public static boolean isNotScanClass(String className){
+        String block = BASIC_PACKAGE_PREFIX_LIST.stream().filter( prefix -> className.startsWith(prefix)).findAny().orElse(null);
+        return block != null;
+    }
     public static boolean isObjClass(Class<?> type) {
         if (type.isPrimitive() || type.isEnum() || type.isArray() ) {
             return false;

@@ -34,6 +34,9 @@ public class MsgSaver {
         this.initDetailParams(ParamType.QUERY_PARAM, annoParams, maxDeepLeel);
         List<DetailParam> annoBody = annotationScanner.getParameterWithAnnotation(ValidationBody.class);
         this.initDetailParams(ParamType.BODY, annoBody, maxDeepLeel);
+
+        this.validationDataRepository.flush();
+        this.validationStore.refresh();
         log.info("[ANNOTATION_SCAN] Complete");
     }
 
