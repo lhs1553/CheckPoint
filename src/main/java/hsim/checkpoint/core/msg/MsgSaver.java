@@ -9,6 +9,7 @@ import hsim.checkpoint.core.domain.ReqUrl;
 import hsim.checkpoint.core.domain.ValidationData;
 import hsim.checkpoint.core.repository.ValidationDataRepository;
 import hsim.checkpoint.core.store.ValidationStore;
+import hsim.checkpoint.type.MsgCheckType;
 import hsim.checkpoint.type.ParamType;
 import hsim.checkpoint.util.AnnotationScanner;
 import hsim.checkpoint.util.excel.TypeCheckUtil;
@@ -51,7 +52,7 @@ public class MsgSaver {
     }
 
     public void urlCheckAndSave(ParamType paramType, ReqUrl reqUrl, Class<?> type) {
-        if (!this.validationConfig.isFreshUrlSave()) {
+        if ( this.validationConfig.getMsgCheckType().equals(MsgCheckType.URL) && !this.validationConfig.isFreshUrlSave()) {
             return;
         }
 
