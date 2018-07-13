@@ -58,9 +58,9 @@ public class MsgSaver {
         List<ValidationData> datas = this.validationDataRepository.findByParamTypeAndUrlAndMethod(paramType, reqUrl.getUrl(), reqUrl.getMethod());
         if (datas.isEmpty()) {
             this.saveParameter(null, paramType, reqUrl, null, type, 0, this.validationConfig.getMaxDeepLevel());
+            this.validationDataRepository.flush();
+            this.validationStore.refresh();
         }
-        this.validationDataRepository.flush();
-        this.validationStore.refresh();
     }
 
     private ValidationData getDefaultvalidationData(DetailParam detailParam, ParamType paramType, ReqUrl reqUrl, ValidationData parent, Field field, int deepLevel) {

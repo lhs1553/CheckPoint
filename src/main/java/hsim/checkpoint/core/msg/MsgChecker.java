@@ -38,6 +38,7 @@ public class MsgChecker {
     public void checkRequest(BasicCheckInfo basicCheckInfo, Object bodyObj) {
 
         String key = this.validationConfig.getMsgCheckType().equals(MsgCheckType.URL) ? basicCheckInfo.getReqUrl().getUniqueKey() : basicCheckInfo.getDetailParam().getMethodKey();
+        log.info("key : " + key);
 
         List<ValidationData> checkData = this.validationStore.getValidationDatas(basicCheckInfo.getParamType(), key);
 
@@ -45,6 +46,7 @@ public class MsgChecker {
             return;
         }
         checkData.stream().forEach(data -> {
+            log.info("check data : " + data.toString());
             this.checkDataInnerRules(data, bodyObj);
         });
     }

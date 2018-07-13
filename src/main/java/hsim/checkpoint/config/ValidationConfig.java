@@ -12,7 +12,7 @@ public class ValidationConfig {
     @Value("${validation.msg.check.type:FUNCTION}")
     private MsgCheckType msgCheckType;
 
-    @Value("${validation.fresh.url.save:true}")
+    @Value("${validation.fresh.url.save:false}")
     private boolean freshUrlSave;
 
     @Value("${validation.msg.check.body.logging:true}")
