@@ -52,7 +52,7 @@ public class MsgSaver {
     }
 
     public void urlCheckAndSave(ParamType paramType, ReqUrl reqUrl, Class<?> type) {
-        if ( this.validationConfig.getMsgCheckType().equals(MsgCheckType.URL) && !this.validationConfig.isFreshUrlSave()) {
+        if ( !this.validationConfig.getMsgCheckType().equals(MsgCheckType.URL) || !this.validationConfig.isFreshUrlSave()) {
             return;
         }
 
