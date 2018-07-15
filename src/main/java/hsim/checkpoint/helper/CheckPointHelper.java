@@ -2,18 +2,18 @@ package hsim.checkpoint.helper;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import hsim.checkpoint.config.ValidationConfig;
 import hsim.checkpoint.core.component.ComponentMap;
-import hsim.checkpoint.core.msg.MsgChecker;
 import hsim.checkpoint.core.component.validationRule.callback.ValidationInvalidCallback;
 import hsim.checkpoint.core.component.validationRule.check.BaseValidationCheck;
 import hsim.checkpoint.core.component.validationRule.rule.AssistType;
 import hsim.checkpoint.core.component.validationRule.rule.ValidationRule;
 import hsim.checkpoint.core.component.validationRule.type.BasicCheckRule;
 import hsim.checkpoint.core.component.validationRule.type.StandardValueType;
-import hsim.checkpoint.config.ValidationConfig;
-import hsim.checkpoint.interceptor.ValidationResolver;
+import hsim.checkpoint.core.msg.MsgChecker;
 import hsim.checkpoint.core.repository.ValidationDataRepository;
 import hsim.checkpoint.core.store.ValidationRuleStore;
+import hsim.checkpoint.interceptor.ValidationResolver;
 
 public class CheckPointHelper {
 
@@ -28,7 +28,7 @@ public class CheckPointHelper {
         return this;
     }
 
-    public CheckPointHelper replaceExceptionCallback(BasicCheckRule checkRule,  ValidationInvalidCallback cb){
+    public CheckPointHelper replaceExceptionCallback(BasicCheckRule checkRule, ValidationInvalidCallback cb) {
         this.msgChecker.replaceCallback(checkRule, cb);
         return this;
     }
@@ -48,7 +48,7 @@ public class CheckPointHelper {
         return this;
     }
 
-    public ValidationConfig getConfig(){
+    public ValidationConfig getConfig() {
         return this.validationConfig;
     }
 

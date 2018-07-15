@@ -22,6 +22,16 @@ public class AnnotationScanner {
 
     private List<Class<?>> allClass = null;
 
+    public AnnotationScanner() {
+        File rootDir = this.getClassRootDirectory();
+
+        if (rootDir != null) {
+            this.allClass = getDirClassList(rootDir, null);
+        } else {
+            this.initJar();
+        }
+    }
+
     private void initJar() {
         File file = new File("./");
 
@@ -55,16 +65,6 @@ public class AnnotationScanner {
             return null;
         }
         return new File(root.getFile());
-    }
-
-    public AnnotationScanner() {
-        File rootDir = this.getClassRootDirectory();
-
-        if (rootDir != null) {
-            this.allClass = getDirClassList(rootDir, null);
-        } else {
-            this.initJar();
-        }
     }
 
     private String fromFileToClassName(final String fileName) {

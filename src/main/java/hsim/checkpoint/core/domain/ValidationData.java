@@ -46,6 +46,8 @@ public class ValidationData {
     private String methodKey;
     private String parameterKey;
 
+    private boolean urlMapping;
+
     @Getter(AccessLevel.PRIVATE)
     private ValidationData parent;
 
@@ -59,6 +61,7 @@ public class ValidationData {
         this.paramType = paramType;
         this.parentId = parent == null ? null : parent.getId();
         this.deepLevel = deepLevel;
+        this.urlMapping = detailParam.isUrlMapping();
 
         this.updateField(field);
         this.updateKey(detailParam);
@@ -173,6 +176,7 @@ public class ValidationData {
         }
         this.methodKey = detailParam.getMethodKey();
         this.parameterKey = detailParam.getParameterKey();
+        this.urlMapping = detailParam.isUrlMapping();
 
         return this;
     }

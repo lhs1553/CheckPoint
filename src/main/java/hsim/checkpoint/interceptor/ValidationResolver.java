@@ -1,14 +1,13 @@
 package hsim.checkpoint.interceptor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import hsim.checkpoint.config.ValidationConfig;
 import hsim.checkpoint.core.annotation.ValidationBody;
 import hsim.checkpoint.core.annotation.ValidationParam;
 import hsim.checkpoint.core.component.ComponentMap;
-import hsim.checkpoint.core.component.DetailParam;
+import hsim.checkpoint.core.domain.BasicCheckInfo;
 import hsim.checkpoint.core.msg.MsgChecker;
 import hsim.checkpoint.core.msg.MsgSaver;
-import hsim.checkpoint.config.ValidationConfig;
-import hsim.checkpoint.core.domain.BasicCheckInfo;
 import hsim.checkpoint.type.ParamType;
 import hsim.checkpoint.util.ParameterMapper;
 import hsim.checkpoint.util.ValidationObjUtil;
@@ -55,10 +54,9 @@ public class ValidationResolver implements HandlerMethodArgumentResolver {
                                   NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
 
         Object reqBody = null;
-        BasicCheckInfo basicCheckInfo = new BasicCheckInfo((HttpServletRequest) webRequest.getNativeRequest(), parameter);
-        basicCheckInfo.logging(this.validationConfig);
+        BasicCheckInfo basicCheckInfo = new BasicCheckInfo((HttpServletRequest) webRequest.getNativeRequest(), parameter, this.validationConfig.isBodyLogging());
 
-        this.msgSaver.urlCheckAndSave(parameter, basicCheckInfo.getParamType(), basicCheckInfo.getReqUrl(), parameter.getParameterType());
+        this.msgSaver.urlCheckAndSave(basicCheckInfo, basicCheckInfo.getParamType(), basicCheckInfo.getReqUrl(), parameter.getParameterType());
 
         if (basicCheckInfo.getParamType().equals(ParamType.BODY) && basicCheckInfo.isListBody()) {
             ParameterizedType paramType = (ParameterizedType) parameter.getGenericParameterType();

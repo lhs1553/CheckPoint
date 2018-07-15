@@ -21,7 +21,7 @@ public class TypeCheckUtil {
             double.class, float.class, long.class, int.class, byte.class, short.class
     };
 
-    private static String[] BASIC_PACKAGE_PREFIX ={ "java", "sun", "org" };
+    private static String[] BASIC_PACKAGE_PREFIX = {"java", "sun", "org"};
 
     private static List<Class<?>> PRIMITIVE_CLASS_LIST = Arrays.stream(PRIMITIVE_CLASS_TYPE).collect(Collectors.toList());
 
@@ -40,19 +40,22 @@ public class TypeCheckUtil {
         return isNumberClass(field.getType());
     }
 
-    public static boolean isNotScanClass(String className){
-        String block = BASIC_PACKAGE_PREFIX_LIST.stream().filter( prefix -> className.startsWith(prefix)).findAny().orElse(null);
+    public static boolean isNotScanClass(String className) {
+        String block = BASIC_PACKAGE_PREFIX_LIST.stream().filter(prefix -> className.startsWith(prefix)).findAny().orElse(null);
         return block != null;
     }
+
     public static boolean isObjClass(Class<?> type) {
-        if (type.isPrimitive() || type.isEnum() || type.isArray() ) {
+        if (type.isPrimitive() || type.isEnum() || type.isArray()) {
             return false;
         }
 
-        String block = BASIC_PACKAGE_PREFIX_LIST.stream().filter( prefix -> type.getName().startsWith(prefix)).findAny().orElse(null);
-        if( block != null){ return false; }
+        String block = BASIC_PACKAGE_PREFIX_LIST.stream().filter(prefix -> type.getName().startsWith(prefix)).findAny().orElse(null);
+        if (block != null) {
+            return false;
+        }
 
-        return !PRIMITIVE_CLASS_LIST.contains(type) ;
+        return !PRIMITIVE_CLASS_LIST.contains(type);
     }
 
     public static boolean isListClass(Class<?> type) {

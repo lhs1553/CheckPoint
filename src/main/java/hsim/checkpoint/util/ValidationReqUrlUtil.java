@@ -13,7 +13,7 @@ public class ValidationReqUrlUtil {
     public static List<ReqUrl> getUrlListFromValidationDatas(List<ValidationData> datas) {
         Map<String, ReqUrl> urlMap = new HashMap<>();
         datas.stream().forEach(data -> {
-            ReqUrl url = new ReqUrl(data.getUrl(), data.getMethod());
+            ReqUrl url = new ReqUrl(data);
             urlMap.put(url.getUniqueKey(), url);
         });
 

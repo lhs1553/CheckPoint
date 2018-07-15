@@ -48,12 +48,12 @@ public class ValidationRuleStore {
 
     public ValidationRuleStore addRule(ValidationRule... rules) {
         for (ValidationRule rule : rules) {
-           this.addRule(rule) ;
+            this.addRule(rule);
         }
         return this;
     }
 
-    public synchronized  ValidationRuleStore addRule(ValidationRule rule) {
+    public synchronized ValidationRuleStore addRule(ValidationRule rule) {
         rule.setOrderIdx(this.rules.size());
         this.rules.add(rule);
         return this;

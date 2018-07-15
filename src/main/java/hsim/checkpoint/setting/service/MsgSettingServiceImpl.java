@@ -33,7 +33,7 @@ public class MsgSettingServiceImpl implements MsgSettingService {
 
     @Override
     public List<ValidationData> getValidationData(String method, String url) {
-        return this.validationDataRepository.findByUrlAndMethod(url, method);
+        return this.validationDataRepository.findByMethodAndUrl(method, url);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class MsgSettingServiceImpl implements MsgSettingService {
 
     @Override
     public List<ValidationData> getValidationData(ParamType paramType, String method, String url) {
-        return this.validationDataRepository.findByParamTypeAndUrlAndMethod(paramType, url, method);
+        return this.validationDataRepository.findByParamTypeAndMethodAndUrl(paramType, method, url);
     }
 
     @Override
@@ -126,7 +126,7 @@ public class MsgSettingServiceImpl implements MsgSettingService {
 
     @Override
     public void deleteValidationData(ReqUrl url) {
-        this.validationDataRepository.deleteAll(this.validationDataRepository.findByUrlAndMethod(url.getUrl(), url.getMethod()));
+        this.validationDataRepository.deleteAll(this.validationDataRepository.findByMethodAndUrl(url.getMethod(), url.getUrl()));
 
         this.validationDataRepository.flushAndRuleSync();
         this.validationStore.refresh();

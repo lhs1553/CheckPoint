@@ -9,7 +9,6 @@ import hsim.checkpoint.core.domain.ReqUrl;
 import hsim.checkpoint.core.domain.ValidationData;
 import hsim.checkpoint.core.repository.ValidationDataRepository;
 import hsim.checkpoint.core.store.ValidationStore;
-import hsim.checkpoint.type.MsgCheckType;
 import hsim.checkpoint.type.ParamType;
 import hsim.checkpoint.util.AnnotationScanner;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +25,8 @@ public class MethodSyncor {
     private ValidationConfig validationConfig = ComponentMap.get(ValidationConfig.class);
     private AnnotationScanner annotationScanner = ComponentMap.get(AnnotationScanner.class);
 
-    public MethodSyncor() { }
+    public MethodSyncor() {
+    }
 
     public void updateMethodKeyAsync() {
         new Thread(() -> {
@@ -35,10 +35,6 @@ public class MethodSyncor {
     }
 
     private void updateMethodKey() {
-        if (!this.validationConfig.getMsgCheckType().equals(MsgCheckType.FUNCTION)) {
-            return;
-        }
-
         Arrays.stream(ParamType.values()).forEach(paramType -> this.syncMethodKey(paramType));
 
         this.validationDataRepository.flush();
@@ -53,7 +49,7 @@ public class MethodSyncor {
         params.forEach(param -> {
             List<ReqUrl> urls = param.getReqUrls();
             urls.forEach(url -> {
-                List<ValidationData> datas = this.validationDataRepository.findByParamTypeAndUrlAndMethod(paramType, url.getUrl(), url.getMethod());
+                List<ValidationData> datas = this.validationDataRepository.findByParamTypeAndMethodAndUrl(paramType, url.getMethod(), url.getUrl());
                 if (!datas.isEmpty()) {
                     this.validationDataRepository.saveAll(datas.stream().map(data -> data.updateKey(param)).collect(Collectors.toList()));
                 }

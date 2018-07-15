@@ -14,8 +14,12 @@ public class RuleSorter implements Comparator {
         int v1 = rule1.getOrderIdx();
         int v2 = rule2.getOrderIdx();
 
-        if(v1 < v2 ){ return -1 ; }
-        else if (v1 == v2 ){return 0 ; }
-        else{ return 1 ; }
+        if (v1 < v2) {
+            return -1;
+        } else if (v1 == v2) {
+            return 0;
+        } else {
+            return 1;
+        }
     }
 }

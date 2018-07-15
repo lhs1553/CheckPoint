@@ -20,7 +20,7 @@ public class CommonReqModel {
 
     private String param1;
     private String param2;
-    private double size ;
+    private double size;
     private List<Child> childs;
 
 }

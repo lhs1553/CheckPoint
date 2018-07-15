@@ -71,7 +71,7 @@ public class MsgExcelServiceImpl implements MsgExcelService {
     }
 
     private boolean createParamSheet(PoiWorkSheet sheet, ParamType paramType, ReqUrl reqUrl) {
-        List<ValidationData> datas = this.validationDataRepository.findByParamTypeAndUrlAndMethod(paramType, reqUrl.getUrl(), reqUrl.getMethod());
+        List<ValidationData> datas = this.validationDataRepository.findByParamTypeAndMethodAndUrl(paramType, reqUrl.getMethod(), reqUrl.getUrl());
         if (datas.isEmpty()) {
             return false;
         }
@@ -121,7 +121,7 @@ public class MsgExcelServiceImpl implements MsgExcelService {
     @Override
     public PoiWorkBook getExcel(String method, String url) {
         PoiWorkBook workBook = new PoiWorkBook();
-        this.createReqUrlSheet(workBook, new ReqUrl(url, method));
+        this.createReqUrlSheet(workBook, new ReqUrl(method, url));
         return workBook;
     }
 }

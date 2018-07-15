@@ -11,6 +11,4 @@ public @interface ValidationParam {
     boolean required() default true;
 
     String charset() default "UTF-8";
-
-    String url() default "";
 }

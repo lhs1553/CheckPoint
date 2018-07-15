@@ -3,10 +3,10 @@ package hsim.checkpoint.core.annotation;
 import java.lang.annotation.*;
 
 
-@Target(ElementType.PARAMETER)
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface ValidationBody {
+public @interface ValidationUrlMapping {
 
     boolean required() default true;
 }

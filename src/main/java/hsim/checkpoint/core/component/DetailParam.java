@@ -1,5 +1,6 @@
 package hsim.checkpoint.core.component;
 
+import hsim.checkpoint.core.annotation.ValidationUrlMapping;
 import hsim.checkpoint.core.domain.ReqUrl;
 import hsim.checkpoint.util.AnnotationUtil;
 import lombok.Getter;
@@ -26,6 +27,13 @@ public class DetailParam {
         this.parentClass = parentClass;
     }
 
+    public boolean isUrlMapping() {
+        if (parentMethod == null) {
+            return false;
+        }
+        return this.parentMethod.getAnnotation(ValidationUrlMapping.class) != null;
+    }
+
     private String getRequestMappingUrl(String[] value) {
         if (value == null) {
             return "";
@@ -33,9 +41,7 @@ public class DetailParam {
 
         String url = "";
         for (String s : value) {
-            if (!s.endsWith("*")) {
-                url += s;
-            }
+            url += s;
         }
         return url;
     }
@@ -60,7 +66,7 @@ public class DetailParam {
         List<ReqUrl> list = new ArrayList<>();
 
         for (RequestMethod requestMethod : requestAnnotation.getMethod()) {
-            list.add(new ReqUrl(url, requestMethod.name()));
+            list.add(new ReqUrl(requestMethod.name(), url));
         }
         return list;
     }

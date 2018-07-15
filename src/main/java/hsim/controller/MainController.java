@@ -2,6 +2,7 @@ package hsim.controller;
 
 import hsim.checkpoint.core.annotation.ValidationBody;
 import hsim.checkpoint.core.annotation.ValidationParam;
+import hsim.checkpoint.core.annotation.ValidationUrlMapping;
 import hsim.model.CommonReqModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/main")
 public class MainController {
 
-    @PostMapping("/bcdg")
+    @PostMapping("/urlmap/**")
+    @ValidationUrlMapping
     public CommonReqModel mainControllerbcdeg(@ValidationParam CommonReqModel paramModel, @ValidationBody CommonReqModel reqModel, HttpServletRequest req, HttpServletResponse res) {
         log.info(reqModel.toString());
         log.info(paramModel.toString());

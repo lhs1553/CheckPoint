@@ -1,13 +1,11 @@
 package hsim.checkpoint.core.store;
 
 import hsim.checkpoint.core.component.ComponentMap;
-import hsim.checkpoint.config.ValidationConfig;
 import hsim.checkpoint.core.domain.ReqUrl;
 import hsim.checkpoint.core.domain.ValidationData;
 import hsim.checkpoint.core.repository.ValidationDataRepository;
-import hsim.checkpoint.type.MsgCheckType;
-import hsim.checkpoint.type.ParamType;
 import hsim.checkpoint.exception.ValidationLibException;
+import hsim.checkpoint.type.ParamType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 
@@ -22,11 +20,11 @@ public class ValidationStore {
     private List<ValidationData> allList;
     private Map<String, ReqUrl> urlMap;
     private Map<String, List<ValidationData>> validationDataRuleListMap;
-    private ValidationConfig validationConfig = ComponentMap.get(ValidationConfig.class);
 
     private ValidationDataRepository repository = ComponentMap.get(ValidationDataRepository.class);
 
-    public ValidationStore(){ }
+    public ValidationStore() {
+    }
 
     private void instanceInit() {
         urlMap = new HashMap<>();
@@ -46,8 +44,8 @@ public class ValidationStore {
         allList = this.repository.findAll(false);
 
         allList.stream().forEach(data -> {
-            ReqUrl url = new ReqUrl(data.getUrl(), data.getMethod());
-            if (this.validationConfig.getMsgCheckType().equals(MsgCheckType.URL)) {
+            ReqUrl url = new ReqUrl(data);
+            if (url.isUrlMapping()) {
                 urlMap.put(url.getUniqueKey(), url);
             } else {
                 urlMap.put(data.getMethodKey(), url);

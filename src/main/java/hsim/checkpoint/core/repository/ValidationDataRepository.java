@@ -6,9 +6,9 @@ import hsim.checkpoint.core.component.ComponentMap;
 import hsim.checkpoint.core.domain.ReqUrl;
 import hsim.checkpoint.core.domain.ValidationData;
 import hsim.checkpoint.core.store.ValidationRuleStore;
+import hsim.checkpoint.exception.ValidationLibException;
 import hsim.checkpoint.type.ParamType;
 import hsim.checkpoint.util.ValidationObjUtil;
-import hsim.checkpoint.exception.ValidationLibException;
 import org.apache.commons.io.FileUtils;
 import org.springframework.http.HttpStatus;
 
@@ -39,7 +39,7 @@ public class ValidationDataRepository {
     private void urlMapInit() {
         this.urlMap = new HashMap<>();
         this.datas.stream().forEach(d -> {
-            ReqUrl reqUrl = new ReqUrl(d.getUrl(), d.getMethod());
+            ReqUrl reqUrl = new ReqUrl(d);
             this.urlMap.put(reqUrl.getUniqueKey(), reqUrl);
         });
     }
@@ -102,29 +102,29 @@ public class ValidationDataRepository {
         return list;
     }
 
-    public List<ValidationData> findByUrlAndMethod(String url, String method) {
+    public List<ValidationData> findByMethodAndUrl(String method, String url) {
         return this.datas.stream().filter(d -> d.getUrl().equalsIgnoreCase(url) && d.getMethod().equalsIgnoreCase(method)).collect(Collectors.toList());
     }
 
-    public List<ValidationData> findByParamTypeAndUrlAndMethod(ParamType paramType, String url, String method) {
-        return this.findByUrlAndMethod(url, method).stream().filter(d -> d.getParamType().equals(paramType)).collect(Collectors.toList());
+    public List<ValidationData> findByParamTypeAndMethodAndUrl(ParamType paramType, String method, String url) {
+        return this.findByMethodAndUrl(method, url).stream().filter(d -> d.getParamType().equals(paramType)).collect(Collectors.toList());
     }
 
-    public List<ValidationData> findByParamTypeAndUrlAndMethodAndName(ParamType paramType, String url, String method, String name) {
-        return this.findByUrlAndMethodAndName(url, method, name).stream().filter(vd -> vd.getParamType().equals(paramType)).collect(Collectors.toList());
+    public List<ValidationData> findByParamTypeAndMethodAndUrlAndName(ParamType paramType, String method, String url, String name) {
+        return this.findByMethodAndUrlAndName(method, url, name).stream().filter(vd -> vd.getParamType().equals(paramType)).collect(Collectors.toList());
     }
 
-    public ValidationData findByParamTypeAndUrlAndMethodAndNameAndParentId(ParamType paramType, String url, String method, String name, Long parentId) {
+    public ValidationData findByParamTypeAndMethodAndUrlAndNameAndParentId(ParamType paramType, String method, String url, String name, Long parentId) {
         if (parentId == null) {
-            return this.findByParamTypeAndUrlAndMethodAndName(paramType, url, method, name).stream().filter(d -> d.getParentId() == null).findAny().orElse(null);
+            return this.findByParamTypeAndMethodAndUrlAndName(paramType, method, url, name).stream().filter(d -> d.getParentId() == null).findAny().orElse(null);
         }
-        return this.findByParamTypeAndUrlAndMethodAndName(paramType, url, method, name).stream()
+        return this.findByParamTypeAndMethodAndUrlAndName(paramType, method, url, name).stream()
                 .filter(d -> d.getParentId() != null && d.getParentId().equals(parentId)).findAny().orElse(null);
 
     }
 
-    public List<ValidationData> findByUrlAndMethodAndName(String url, String method, String name) {
-        return this.findByUrlAndMethod(url, method).stream().filter(d -> d.getName().equalsIgnoreCase(name)).collect(Collectors.toList());
+    public List<ValidationData> findByMethodAndUrlAndName(String method, String url, String name) {
+        return this.findByMethodAndUrl(method, url).stream().filter(d -> d.getName().equalsIgnoreCase(name)).collect(Collectors.toList());
     }
 
 
@@ -133,11 +133,11 @@ public class ValidationDataRepository {
     }
 
 
-    public ValidationData findByUrlAndMethodAndNameAndParentId(String url, String method, String name, Long parentId) {
+    public ValidationData findByMethodAndUrlAndNameAndParentId(String method, String url, String name, Long parentId) {
         if (parentId == null) {
-            return this.findByUrlAndMethodAndName(url, method, name).stream().filter(d -> d.getParentId() == null).findAny().orElse(null);
+            return this.findByMethodAndUrlAndName(method, url, name).stream().filter(d -> d.getParentId() == null).findAny().orElse(null);
         }
-        return this.findByUrlAndMethodAndName(url, method, name).stream()
+        return this.findByMethodAndUrlAndName(method, url, name).stream()
                 .filter(d -> d.getParentId() != null && d.getParentId().equals(parentId)).findAny().orElse(null);
 
     }
@@ -171,17 +171,19 @@ public class ValidationDataRepository {
 
         return data;
     }
-    public synchronized  void flushAndRuleSync(){
+
+    public synchronized void flushAndRuleSync() {
         this.ruleSync();
         this.flush();
     }
 
-    public synchronized  void ruleSync(){
+    public synchronized void ruleSync() {
         this.datas.stream().forEach(data -> {
-            data.initValidationRuleList(this.validationRuleStore.getRules(),true);
+            data.initValidationRuleList(this.validationRuleStore.getRules(), true);
         });
     }
-    public synchronized  void ruleCheck(){
+
+    public synchronized void ruleCheck() {
         this.datas.stream().forEach(data -> {
             data.initValidationRuleList(this.validationRuleStore.getRules(), false);
         });

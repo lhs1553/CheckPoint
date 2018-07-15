@@ -34,6 +34,7 @@ public class ValidationRule {
         this.standardValueType = standardValueType;
         this.validationCheck = checker;
     }
+
     public ValidationRule(String rName, StandardValueType standardValueType, BaseValidationCheck checker) {
         this.ruleName = rName;
         this.standardValueType = standardValueType;
@@ -66,6 +67,7 @@ public class ValidationRule {
         this.overlapBanRuleName = rule.name();
         return this;
     }
+
     public ValidationRule overlapBanRule(String ruleName) {
         this.overlapBanRuleName = ruleName;
         return this;

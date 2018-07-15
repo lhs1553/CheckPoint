@@ -5,16 +5,14 @@ import hsim.checkpoint.core.annotation.ValidationBody;
 import hsim.checkpoint.core.annotation.ValidationParam;
 import hsim.checkpoint.core.component.ComponentMap;
 import hsim.checkpoint.core.component.DetailParam;
+import hsim.checkpoint.core.domain.BasicCheckInfo;
 import hsim.checkpoint.core.domain.ReqUrl;
 import hsim.checkpoint.core.domain.ValidationData;
 import hsim.checkpoint.core.repository.ValidationDataRepository;
 import hsim.checkpoint.core.store.ValidationStore;
-import hsim.checkpoint.type.MsgCheckType;
 import hsim.checkpoint.type.ParamType;
 import hsim.checkpoint.util.AnnotationScanner;
-import hsim.checkpoint.util.excel.TypeCheckUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.MethodParameter;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -53,15 +51,14 @@ public class MsgSaver {
         });
     }
 
-    public void urlCheckAndSave(MethodParameter methodParameter, ParamType paramType, ReqUrl reqUrl, Class<?> type) {
-        if (!this.validationConfig.getMsgCheckType().equals(MsgCheckType.URL) || !this.validationConfig.isFreshUrlSave()) {
+    public void urlCheckAndSave(BasicCheckInfo basicCheckInfo, ParamType paramType, ReqUrl reqUrl, Class<?> type) {
+        if (!this.validationConfig.isFreshUrlSave() || !basicCheckInfo.isUrlMapping()) {
             return;
         }
-        DetailParam detailParam = new DetailParam(methodParameter.getParameter(), methodParameter.getMethod(), null);
 
-        List<ValidationData> datas = this.validationDataRepository.findByParamTypeAndUrlAndMethod(paramType, reqUrl.getUrl(), reqUrl.getMethod());
+        List<ValidationData> datas = this.validationDataRepository.findByParamTypeAndMethodAndUrl(paramType, reqUrl.getMethod(), reqUrl.getUrl());
         if (datas.isEmpty()) {
-            this.saveParameter(detailParam, paramType, reqUrl, null, type, 0, this.validationConfig.getMaxDeepLevel());
+            this.saveParameter(basicCheckInfo.getDetailParam(), paramType, reqUrl, null, type, 0, this.validationConfig.getMaxDeepLevel());
             this.validationDataRepository.flush();
             this.validationStore.refresh();
         }
@@ -69,13 +66,12 @@ public class MsgSaver {
 
     private void saveParameter(DetailParam detailParam, ParamType paramType, ReqUrl reqUrl, ValidationData parent, Class<?> type, int deepLevel, final int maxDeepLevel) {
         if (deepLevel > maxDeepLevel) {
-            if (detailParam != null) {
-                log.info(detailParam.getParameter().getType().getName() + "deep level " + deepLevel + " param : " + type.getName());
-            }
+            log.info(detailParam.getParameter().getType().getName() + "deep level " + deepLevel + " param : " + type.getName());
             return;
         }
+
         for (Field field : type.getDeclaredFields()) {
-            ValidationData param = this.validationDataRepository.findByParamTypeAndUrlAndMethodAndNameAndParentId(paramType, reqUrl.getUrl(), reqUrl.getMethod(), field.getName(), parent == null ? null : parent.getId());
+            ValidationData param = this.validationDataRepository.findByParamTypeAndMethodAndUrlAndNameAndParentId(paramType, reqUrl.getMethod(), reqUrl.getUrl(), field.getName(), parent == null ? null : parent.getId());
             if (param == null) {
                 param = new ValidationData(detailParam, paramType, reqUrl, parent, field, deepLevel);
             } else {
