@@ -1,7 +1,5 @@
 package hsim.checkpoint.util;
 
-import hsim.checkpoint.config.ValidationConfig;
-import hsim.checkpoint.core.component.ComponentMap;
 import hsim.checkpoint.core.component.DetailParam;
 import hsim.checkpoint.util.excel.TypeCheckUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +20,6 @@ import java.util.jar.JarFile;
 @Slf4j
 public class AnnotationScanner {
 
-    private ValidationConfig validationConfig = ComponentMap.get(ValidationConfig.class);
     private List<Class<?>> allClass = null;
 
     private void initJar() {
