@@ -1,4 +1,4 @@
-package hsim.test.model;
+package hsim.model;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,13 +11,16 @@ import java.util.List;
 @ToString
 public class CommonReqModel {
     private long id;
+
     private String loginId;
+    private String email;
     private String domain;
     private String name;
     private Child parent1;
 
     private String param1;
     private String param2;
+    private double size ;
     private List<Child> childs;
 
 }

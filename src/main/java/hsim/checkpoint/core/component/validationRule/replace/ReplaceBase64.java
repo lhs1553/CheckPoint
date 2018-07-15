@@ -18,9 +18,9 @@ public class ReplaceBase64 extends BaseValidationCheck {
         if (value != null && value instanceof String) {
             try {
                 return new String(Base64.getDecoder().decode((String) value), "UTF-8");
-            } catch (UnsupportedEncodingException e) {
+            } catch (UnsupportedEncodingException | IllegalArgumentException e) {
                 log.info("base64 decode fail ( " + param.getName() + " ) :" + value);
-                return null;
+                return value;
             }
         }
         return null;

@@ -2,7 +2,7 @@ package hsim.controller;
 
 import hsim.checkpoint.core.annotation.ValidationBody;
 import hsim.checkpoint.core.annotation.ValidationParam;
-import hsim.test.model.CommonReqModel;
+import hsim.model.CommonReqModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

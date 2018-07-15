@@ -1,4 +1,4 @@
-package hsim.test.model;
+package hsim.model;
 
 import lombok.Getter;
 import lombok.Setter;

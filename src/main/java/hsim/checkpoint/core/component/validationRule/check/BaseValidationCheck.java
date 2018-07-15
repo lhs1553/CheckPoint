@@ -29,11 +29,12 @@ public class BaseValidationCheck {
                 this.callExcpetion(param, value, standardValue, cb);
             }
 
-            //replace value
-            Object replaceValue = this.replace(value, standardValue, param);
-            if (replaceValue != null) {
-                param.replaceValue(bodyObj, replaceValue);
-            }
+
+        }
+        //replace value
+        Object replaceValue = this.replace(value, standardValue, param);
+        if (replaceValue != null) {
+            param.replaceValue(bodyObj, replaceValue);
         }
     }
 

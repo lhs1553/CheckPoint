@@ -11,7 +11,8 @@ public class ReplaceTrim extends BaseValidationCheck {
     @Override
     public Object replace(Object value, Object standardValue, ValidationData param) {
         if (value != null && value instanceof String) {
-            return ((String) value).trim();
+            String str = (String)value;
+            return str.trim();
         }
         return null;
     }

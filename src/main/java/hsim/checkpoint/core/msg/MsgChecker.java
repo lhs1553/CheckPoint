@@ -29,7 +29,7 @@ public class MsgChecker {
         return this;
     }
 
-    private void checkDataInnerRules(ValidationData data, Object bodyObj) {
+    public void checkDataInnerRules(ValidationData data, Object bodyObj) {
         data.getValidationRules().stream().filter(vr -> vr.isUse()).forEach(rule -> {
             this.validationRuleStore.getValidationChecker(rule).checkPoint(data, rule, bodyObj, rule.getStandardValue(), this.callbackMap.get(rule.getRuleName()));
         });
