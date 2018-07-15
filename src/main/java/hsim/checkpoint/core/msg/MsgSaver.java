@@ -67,27 +67,6 @@ public class MsgSaver {
         }
     }
 
-    private ValidationData getDefaultvalidationData(DetailParam detailParam, ParamType paramType, ReqUrl reqUrl, ValidationData parent, Field field, int deepLevel) {
-
-        ValidationData param = new ValidationData();
-
-        param.setMethod(reqUrl.getMethod());
-        param.setUrl(reqUrl.getUrl());
-        param.setParamType(paramType);
-        param.setParentId(parent == null ? null : parent.getId());
-        param.setName(field.getName());
-        param.setDeepLevel(deepLevel);
-        param.updateType(field.getType());
-        param.setObj(TypeCheckUtil.isObjClass(field));
-        param.setList(TypeCheckUtil.isListClass(field));
-        param.setNumber(TypeCheckUtil.isNumberClass(field));
-        param.setEnumType(field.getType().isEnum());
-        param.updateKey(detailParam);
-
-        return param;
-    }
-
-
     private void saveParameter(DetailParam detailParam, ParamType paramType, ReqUrl reqUrl, ValidationData parent, Class<?> type, int deepLevel, final int maxDeepLevel) {
         if (deepLevel > maxDeepLevel) {
             if (detailParam != null) {
@@ -98,7 +77,7 @@ public class MsgSaver {
         for (Field field : type.getDeclaredFields()) {
             ValidationData param = this.validationDataRepository.findByParamTypeAndUrlAndMethodAndNameAndParentId(paramType, reqUrl.getUrl(), reqUrl.getMethod(), field.getName(), parent == null ? null : parent.getId());
             if (param == null) {
-                param = this.getDefaultvalidationData(detailParam, paramType, reqUrl, parent, field, deepLevel);
+                param = new ValidationData(detailParam, paramType, reqUrl, parent, field, deepLevel);
             } else {
                 param.updateKey(detailParam);
             }

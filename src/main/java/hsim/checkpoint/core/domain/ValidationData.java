@@ -3,13 +3,15 @@ package hsim.checkpoint.core.domain;
 import hsim.checkpoint.core.component.DetailParam;
 import hsim.checkpoint.core.component.validationRule.rule.ValidationRule;
 import hsim.checkpoint.core.component.validationRule.sort.RuleSorter;
+import hsim.checkpoint.exception.ValidationLibException;
 import hsim.checkpoint.type.ParamType;
 import hsim.checkpoint.util.ValidationObjUtil;
-import hsim.checkpoint.exception.ValidationLibException;
+import hsim.checkpoint.util.excel.TypeCheckUtil;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -49,6 +51,19 @@ public class ValidationData {
 
     private List<ValidationRule> validationRules = new ArrayList<>();
 
+
+    public ValidationData(DetailParam detailParam, ParamType paramType, ReqUrl reqUrl, ValidationData parent, Field field, int deepLevel) {
+
+        this.method = reqUrl.getMethod();
+        this.url = reqUrl.getUrl();
+        this.paramType = paramType;
+        this.parentId = parent == null ? null : parent.getId();
+        this.deepLevel = deepLevel;
+
+        this.updateField(field);
+        this.updateKey(detailParam);
+    }
+
     public void initValidationRuleList(List<ValidationRule> list, boolean refresh) {
         if (this.validationRules == null) {
             this.validationRules = list;
@@ -61,41 +76,22 @@ public class ValidationData {
             if (existRule != null) {
                 existRule.updateRuleBasicInfo(rule);
                 refreshlist.add(existRule);
-            }
-            else{
+            } else {
                 this.validationRules.add(rule);
                 refreshlist.add(rule);
             }
         });
 
-        if(refresh){
+        if (refresh) {
             this.validationRules = refreshlist;
         }
 
         this.validationRules.sort(new RuleSorter());
     }
 
-    public boolean isQueryParam() {
-        if (this.paramType == null) {
-            return false;
-        }
-        return this.paramType.equals(ParamType.QUERY_PARAM);
-    }
-
-    public boolean isBody() {
-        if (this.paramType == null) {
-            return false;
-        }
-        return this.paramType.equals(ParamType.BODY);
-    }
 
     public boolean equalUrl(ReqUrl url) {
         return url.getMethod().equalsIgnoreCase(this.method) && url.getUrl().equalsIgnoreCase(this.url);
-    }
-
-    public void updateType(Class<?> pType) {
-        this.typeClass = pType;
-        this.type = pType.getSimpleName();
     }
 
     private Object castSetValue(ValidationData param, Object value) {
@@ -179,6 +175,30 @@ public class ValidationData {
         this.parameterKey = detailParam.getParameterKey();
 
         return this;
+    }
+
+    public void updateField(Field field) {
+        this.name = field.getName();
+        this.obj = TypeCheckUtil.isObjClass(field);
+        this.list = TypeCheckUtil.isListClass(field);
+        this.number = TypeCheckUtil.isNumberClass(field);
+        this.enumType = field.getType().isEnum();
+        this.typeClass = field.getType();
+        this.type = field.getType().getSimpleName();
+    }
+
+    public boolean isQueryParam() {
+        if (this.paramType == null) {
+            return false;
+        }
+        return this.paramType.equals(ParamType.QUERY_PARAM);
+    }
+
+    public boolean isBody() {
+        if (this.paramType == null) {
+            return false;
+        }
+        return this.paramType.equals(ParamType.BODY);
     }
 
 }
