@@ -1,17 +1,13 @@
 package hsim.checkpoint.setting.controller;
 
-import hsim.checkpoint.core.component.ComponentMap;
 import hsim.checkpoint.config.ValidationConfig;
 import hsim.checkpoint.config.ValidationIntercepterConfig;
+import hsim.checkpoint.core.component.ComponentMap;
 import hsim.checkpoint.core.domain.ReqUrl;
 import hsim.checkpoint.core.domain.ValidationData;
 import hsim.checkpoint.core.msg.MsgSaver;
-import hsim.checkpoint.filter.ValidationCorsFilter;
-import hsim.checkpoint.init.InitCheckPoint;
-import hsim.checkpoint.util.ParameterMapper;
-import hsim.checkpoint.util.ValidationFileUtil;
-import hsim.checkpoint.util.excel.PoiWorkBook;
 import hsim.checkpoint.exception.resolver.ValidationExceptionResolver;
+import hsim.checkpoint.init.InitCheckPoint;
 import hsim.checkpoint.setting.service.MsgExcelService;
 import hsim.checkpoint.setting.service.MsgExcelServiceImpl;
 import hsim.checkpoint.setting.service.MsgSettingService;
@@ -19,6 +15,9 @@ import hsim.checkpoint.setting.service.MsgSettingServiceImpl;
 import hsim.checkpoint.setting.session.ValidationLoginInfo;
 import hsim.checkpoint.setting.session.ValidationSessionComponent;
 import hsim.checkpoint.setting.session.ValidationSessionInfo;
+import hsim.checkpoint.util.ParameterMapper;
+import hsim.checkpoint.util.ValidationFileUtil;
+import hsim.checkpoint.util.excel.PoiWorkBook;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -28,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Base64;
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 public class MsgSettingController {
 
     private MsgSettingService msgSettingService = ComponentMap.get(MsgSettingServiceImpl.class);
@@ -36,7 +36,7 @@ public class MsgSettingController {
     private MsgSaver msgSaver = ComponentMap.get(MsgSaver.class);
 
     @GetMapping("/setting/scan/{maxdeeplevel}")
-    public void annotationScan(@PathVariable int maxdeeplevel,  HttpServletRequest req, HttpServletResponse res) {
+    public void annotationScan(@PathVariable int maxdeeplevel, HttpServletRequest req, HttpServletResponse res) {
         this.msgSaver.annotationScan(maxdeeplevel);
     }
 
@@ -125,18 +125,13 @@ public class MsgSettingController {
     }
 
     @Bean
-    public ValidationCorsFilter validationCorsFilter() {
-        return ComponentMap.get(ValidationCorsFilter.class);
-    }
-
-    @Bean
     public ValidationConfig validationConfig() {
         return ComponentMap.get(ValidationConfig.class);
     }
 
     @Bean
     public InitCheckPoint initCheckPoint() {
-       return ComponentMap.get(InitCheckPoint.class) ;
+        return ComponentMap.get(InitCheckPoint.class);
     }
 
 }
