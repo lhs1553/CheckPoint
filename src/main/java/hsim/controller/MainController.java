@@ -16,9 +16,23 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/main")
 public class MainController {
 
+    @PostMapping("/bcdg")
+    public CommonReqModel mainControllerbcdeg(@ValidationParam CommonReqModel paramModel, @ValidationBody CommonReqModel reqModel, HttpServletRequest req, HttpServletResponse res) {
+        log.info(reqModel.toString());
+        log.info(paramModel.toString());
+        return reqModel;
+    }
 
-    @PostMapping("/**")
-    public CommonReqModel mainController(@ValidationParam CommonReqModel paramModel, @ValidationBody CommonReqModel reqModel, HttpServletRequest req, HttpServletResponse res) {
+    @PostMapping("/abcdb")
+    public CommonReqModel mainContrbba(@ValidationParam CommonReqModel paramModel, @ValidationBody CommonReqModel reqModel, HttpServletRequest req, HttpServletResponse res) {
+        log.info(reqModel.toString());
+        log.info(paramModel.toString());
+        return reqModel;
+    }
+
+
+    @PostMapping("/bcd")
+    public CommonReqModel mainControllera(@ValidationParam CommonReqModel paramModel, @ValidationBody CommonReqModel reqModel, HttpServletRequest req, HttpServletResponse res) {
         log.info(reqModel.toString());
         log.info(paramModel.toString());
         return reqModel;

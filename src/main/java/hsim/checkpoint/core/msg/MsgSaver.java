@@ -14,8 +14,10 @@ import hsim.checkpoint.type.ParamType;
 import hsim.checkpoint.util.AnnotationScanner;
 import hsim.checkpoint.util.excel.TypeCheckUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.MethodParameter;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -24,25 +26,25 @@ public class MsgSaver {
     private ValidationDataRepository validationDataRepository = ComponentMap.get(ValidationDataRepository.class);
     private ValidationStore validationStore = ComponentMap.get(ValidationStore.class);
     private ValidationConfig validationConfig = ComponentMap.get(ValidationConfig.class);
+    private AnnotationScanner annotationScanner = ComponentMap.get(AnnotationScanner.class);
 
     public MsgSaver() {
     }
 
+
     public void annotationScan(final int maxDeepLeel) {
 
-        AnnotationScanner annotationScanner = ComponentMap.get(AnnotationScanner.class);
-        List<DetailParam> annoParams = annotationScanner.getParameterWithAnnotation(ValidationParam.class);
-        this.initDetailParams(ParamType.QUERY_PARAM, annoParams, maxDeepLeel);
-        List<DetailParam> annoBody = annotationScanner.getParameterWithAnnotation(ValidationBody.class);
-        this.initDetailParams(ParamType.BODY, annoBody, maxDeepLeel);
+        Arrays.stream(ParamType.values()).forEach(paramType -> this.initDetailParams(paramType, maxDeepLeel));
 
         this.validationDataRepository.flush();
         this.validationStore.refresh();
         log.info("[ANNOTATION_SCAN] Complete");
     }
 
+    private void initDetailParams(ParamType paramType, final int maxDeepLevel) {
 
-    private void initDetailParams(ParamType paramType, List<DetailParam> params, final int maxDeepLevel) {
+        List<DetailParam> params = this.annotationScanner.getParameterWithAnnotation(paramType.equals(ParamType.BODY) ? ValidationBody.class : ValidationParam.class);
+
         params.forEach(param -> {
             List<ReqUrl> urls = param.getReqUrls();
             urls.forEach(url -> {
@@ -51,14 +53,15 @@ public class MsgSaver {
         });
     }
 
-    public void urlCheckAndSave(ParamType paramType, ReqUrl reqUrl, Class<?> type) {
-        if ( !this.validationConfig.getMsgCheckType().equals(MsgCheckType.URL) || !this.validationConfig.isFreshUrlSave()) {
+    public void urlCheckAndSave(MethodParameter methodParameter, ParamType paramType, ReqUrl reqUrl, Class<?> type) {
+        if (!this.validationConfig.getMsgCheckType().equals(MsgCheckType.URL) || !this.validationConfig.isFreshUrlSave()) {
             return;
         }
+        DetailParam detailParam = new DetailParam(methodParameter.getParameter(), methodParameter.getMethod(), null);
 
         List<ValidationData> datas = this.validationDataRepository.findByParamTypeAndUrlAndMethod(paramType, reqUrl.getUrl(), reqUrl.getMethod());
         if (datas.isEmpty()) {
-            this.saveParameter(null, paramType, reqUrl, null, type, 0, this.validationConfig.getMaxDeepLevel());
+            this.saveParameter(detailParam, paramType, reqUrl, null, type, 0, this.validationConfig.getMaxDeepLevel());
             this.validationDataRepository.flush();
             this.validationStore.refresh();
         }
@@ -87,7 +90,9 @@ public class MsgSaver {
 
     private void saveParameter(DetailParam detailParam, ParamType paramType, ReqUrl reqUrl, ValidationData parent, Class<?> type, int deepLevel, final int maxDeepLevel) {
         if (deepLevel > maxDeepLevel) {
-            log.info(detailParam.getParameter().getType().getName() + "deep level " + deepLevel + " param : " + type.getName());
+            if (detailParam != null) {
+                log.info(detailParam.getParameter().getType().getName() + "deep level " + deepLevel + " param : " + type.getName());
+            }
             return;
         }
         for (Field field : type.getDeclaredFields()) {
@@ -105,5 +110,6 @@ public class MsgSaver {
             }
         }
     }
+
 
 }

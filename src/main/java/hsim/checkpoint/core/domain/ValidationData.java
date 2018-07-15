@@ -171,12 +171,14 @@ public class ValidationData {
         return ValidationObjUtil.objectDeepCopyWithBlackList(data, this, "name", "parent", "type", "deepLevel");
     }
 
-    public void updateKey(DetailParam detailParam) {
+    public ValidationData updateKey(DetailParam detailParam) {
         if (detailParam == null) {
-            return;
+            return this;
         }
         this.methodKey = detailParam.getMethodKey();
         this.parameterKey = detailParam.getParameterKey();
+
+        return this;
     }
 
 }

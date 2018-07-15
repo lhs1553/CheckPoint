@@ -3,10 +3,8 @@ package hsim.checkpoint.util;
 import hsim.checkpoint.config.ValidationConfig;
 import hsim.checkpoint.core.component.ComponentMap;
 import hsim.checkpoint.core.component.DetailParam;
-import hsim.checkpoint.init.InitCheckPoint;
 import hsim.checkpoint.util.excel.TypeCheckUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,15 +23,14 @@ import java.util.jar.JarFile;
 public class AnnotationScanner {
 
     private ValidationConfig validationConfig = ComponentMap.get(ValidationConfig.class);
-
     private List<Class<?>> allClass = null;
 
-    private void initJar(){
-        File file =new File("./");
+    private void initJar() {
+        File file = new File("./");
 
         log.info("file exist : " + file.exists());
         this.allClass = new ArrayList<>();
-        if(file.isDirectory()){
+        if (file.isDirectory()) {
             Arrays.stream(file.list()).filter(f -> f.endsWith(".jar")).forEach(f -> {
                 this.allClass.addAll(this.getJarClassList(this.getJarFile(f)));
             });
@@ -57,24 +54,26 @@ public class AnnotationScanner {
 
     private File getClassRootDirectory() {
         URL root = ClassLoader.getSystemClassLoader().getResource("");
-        if(root == null){ return null; }
+        if (root == null) {
+            return null;
+        }
         return new File(root.getFile());
     }
 
     public AnnotationScanner() {
         File rootDir = this.getClassRootDirectory();
-        this.initJar();
 
         if (rootDir != null) {
             this.allClass = getDirClassList(rootDir, null);
-        } else  {
+        } else {
+            this.initJar();
         }
     }
 
     private String fromFileToClassName(final String fileName) {
         String className = fileName.substring(0, fileName.length() - 6).replaceAll("/|\\\\", "\\.");
-        if(className.indexOf("classes.")>= 0 ){
-           return className.substring(className.indexOf("classes.") + 8);
+        if (className.indexOf("classes.") >= 0) {
+            return className.substring(className.indexOf("classes.") + 8);
         }
         return className;
     }
@@ -89,7 +88,9 @@ public class AnnotationScanner {
                 log.info(className);
 
                 try {
-                    if(TypeCheckUtil.isNotScanClass(className)){ continue; }
+                    if (TypeCheckUtil.isNotScanClass(className)) {
+                        continue;
+                    }
                     Class<?> cla = Class.forName(className);
                     classList.add(cla);
                 } catch (Exception e) {
@@ -111,7 +112,7 @@ public class AnnotationScanner {
                     String filePath = parent + "/" + file.getName();
                     try {
                         String className = this.fromFileToClassName(filePath);
-                        if(!TypeCheckUtil.isNotScanClass(className)) {
+                        if (!TypeCheckUtil.isNotScanClass(className)) {
                             classList.add(Class.forName(className));
                         }
                     } catch (ClassNotFoundException e) {

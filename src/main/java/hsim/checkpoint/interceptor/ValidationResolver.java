@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import hsim.checkpoint.core.annotation.ValidationBody;
 import hsim.checkpoint.core.annotation.ValidationParam;
 import hsim.checkpoint.core.component.ComponentMap;
+import hsim.checkpoint.core.component.DetailParam;
 import hsim.checkpoint.core.msg.MsgChecker;
 import hsim.checkpoint.core.msg.MsgSaver;
 import hsim.checkpoint.config.ValidationConfig;
@@ -57,7 +58,7 @@ public class ValidationResolver implements HandlerMethodArgumentResolver {
         BasicCheckInfo basicCheckInfo = new BasicCheckInfo((HttpServletRequest) webRequest.getNativeRequest(), parameter);
         basicCheckInfo.logging(this.validationConfig);
 
-        this.msgSaver.urlCheckAndSave(basicCheckInfo.getParamType(), basicCheckInfo.getReqUrl(), parameter.getParameterType());
+        this.msgSaver.urlCheckAndSave(parameter, basicCheckInfo.getParamType(), basicCheckInfo.getReqUrl(), parameter.getParameterType());
 
         if (basicCheckInfo.getParamType().equals(ParamType.BODY) && basicCheckInfo.isListBody()) {
             ParameterizedType paramType = (ParameterizedType) parameter.getGenericParameterType();
