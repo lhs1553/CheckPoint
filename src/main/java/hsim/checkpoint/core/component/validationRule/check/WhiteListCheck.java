@@ -1,5 +1,6 @@
 package hsim.checkpoint.core.component.validationRule.check;
 
+import hsim.checkpoint.core.component.validationRule.type.BaseValidationCheck;
 import hsim.checkpoint.core.domain.ValidationData;
 import hsim.checkpoint.exception.ValidationLibException;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,7 @@ import java.util.List;
  * The type White list check.
  */
 @NoArgsConstructor
-public class WhiteListCheck extends BaseValidationCheck {
+public class WhiteListCheck implements BaseValidationCheck {
 
 
     @Override
@@ -19,6 +20,11 @@ public class WhiteListCheck extends BaseValidationCheck {
         List<String> whiteList = (List<String>) standardValue;
 
         return whiteList.contains(String.valueOf(value).trim());
+    }
+
+    @Override
+    public Object replace(Object value, Object standardValue, ValidationData param) {
+        return null;
     }
 
     @Override

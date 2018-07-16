@@ -1,7 +1,7 @@
 package hsim.checkpoint.core.component.validationRule.rule;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import hsim.checkpoint.core.component.validationRule.check.BaseValidationCheck;
+import hsim.checkpoint.core.component.validationRule.type.BaseValidationCheck;
 import hsim.checkpoint.core.component.validationRule.type.BasicCheckRule;
 import hsim.checkpoint.core.component.validationRule.type.StandardValueType;
 import hsim.checkpoint.core.domain.ValidationData;

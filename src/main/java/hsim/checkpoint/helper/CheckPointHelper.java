@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import hsim.checkpoint.config.ValidationConfig;
 import hsim.checkpoint.core.component.ComponentMap;
 import hsim.checkpoint.core.component.validationRule.callback.ValidationInvalidCallback;
-import hsim.checkpoint.core.component.validationRule.check.BaseValidationCheck;
+import hsim.checkpoint.core.component.validationRule.type.BaseValidationCheck;
 import hsim.checkpoint.core.component.validationRule.rule.AssistType;
 import hsim.checkpoint.core.component.validationRule.rule.ValidationRule;
 import hsim.checkpoint.core.component.validationRule.type.BasicCheckRule;

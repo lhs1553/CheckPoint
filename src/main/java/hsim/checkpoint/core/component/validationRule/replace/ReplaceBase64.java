@@ -1,6 +1,6 @@
 package hsim.checkpoint.core.component.validationRule.replace;
 
-import hsim.checkpoint.core.component.validationRule.check.BaseValidationCheck;
+import hsim.checkpoint.core.component.validationRule.type.BaseValidationCheck;
 import hsim.checkpoint.core.domain.ValidationData;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,8 +13,13 @@ import java.util.Base64;
  */
 @Slf4j
 @NoArgsConstructor
-public class ReplaceBase64 extends BaseValidationCheck {
+public class ReplaceBase64 implements  BaseValidationCheck {
 
+
+    @Override
+    public boolean check(Object inputValue, Object standardValue) {
+        return true;
+    }
 
     @Override
     public Object replace(Object value, Object standardValue, ValidationData param) {
@@ -27,6 +32,10 @@ public class ReplaceBase64 extends BaseValidationCheck {
             }
         }
         return null;
+    }
+
+    @Override
+    public void exception(ValidationData param, Object inputValue, Object standardValue) {
     }
 
 }

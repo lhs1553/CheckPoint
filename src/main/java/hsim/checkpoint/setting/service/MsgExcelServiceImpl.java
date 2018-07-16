@@ -41,7 +41,7 @@ public class MsgExcelServiceImpl implements MsgExcelService {
         }
 
         for (int i = 0; i < names.length; i++) {
-            names[i] = i == data.getDeepLevel() ? data.getName() : i < data.getDeepLevel() ? "└" : "";
+            names[i] = i == data.getDeepLevel() ? data.getName() : i < data.getDeepLevel() ? "L" : "";
         }
 
         sheet.createValueCells(names);

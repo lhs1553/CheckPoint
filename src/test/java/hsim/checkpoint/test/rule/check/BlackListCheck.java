@@ -15,9 +15,6 @@ import org.springframework.http.HttpStatus;
 
 import java.util.Arrays;
 
-/**
- * The type Black list check.
- */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class BlackListCheck {
 
@@ -26,9 +23,6 @@ public class BlackListCheck {
     private ValidationData data = ruleTestUtil.getDefaultValidationData();
     private BasicCheckRule checkType = BasicCheckRule.BlackList;
 
-    /**
-     * Instantiates a new Black list check.
-     */
     public BlackListCheck() {
         this.data.setName("name");
 
@@ -37,45 +31,30 @@ public class BlackListCheck {
         rule.setStandardValue(Arrays.asList(new String[]{"-", "~", "_"}));
     }
 
-    /**
-     * Test fail 1.
-     */
     @Test
     public void test_fail_1() {
         obj.setName("~");
         ruleTestUtil.checkRule(data, obj, checkType, obj.getName(), false);
     }
 
-    /**
-     * Test fail 2.
-     */
     @Test
     public void test_fail_2() {
         obj.setName("_");
         ruleTestUtil.checkRule(data, obj, checkType, obj.getName(), false);
     }
 
-    /**
-     * Test success 1.
-     */
     @Test
     public void test_success_1() {
         obj.setName("--");
         ruleTestUtil.checkRule(data, obj, checkType, obj.getName(), true);
     }
 
-    /**
-     * Test success 2.
-     */
     @Test
     public void test_success_2() {
         obj.setName("__");
         ruleTestUtil.checkRule(data, obj, checkType, obj.getName(), true);
     }
 
-    /**
-     * Test callback change.
-     */
     @Test
     public void test_callback_change() {
         CheckPointHelper helper = new CheckPointHelper();
@@ -85,9 +64,6 @@ public class BlackListCheck {
         ruleTestUtil.checkRule(data, obj, checkType, obj.getName(), false, HttpStatus.NOT_ACCEPTABLE);
     }
 
-    /**
-     * The type White list callback.
-     */
     public static class WhiteListCallback implements ValidationInvalidCallback {
         @Override
         public void exception(ValidationData param, Object inputValue, Object standardValue) {

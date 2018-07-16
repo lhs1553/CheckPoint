@@ -2,6 +2,8 @@ package hsim.checkpoint.core.msg;
 
 import hsim.checkpoint.core.component.ComponentMap;
 import hsim.checkpoint.core.component.validationRule.callback.ValidationInvalidCallback;
+import hsim.checkpoint.core.component.validationRule.type.BaseValidationCheck;
+import hsim.checkpoint.core.component.validationRule.rule.ValidationRule;
 import hsim.checkpoint.core.component.validationRule.type.BasicCheckRule;
 import hsim.checkpoint.core.domain.BasicCheckInfo;
 import hsim.checkpoint.core.domain.ValidationData;
@@ -36,6 +38,43 @@ public class MsgChecker {
         return this;
     }
 
+
+    private void callExcpetion(ValidationData param, ValidationRule rule, Object value, Object standardValue) {
+        ValidationInvalidCallback cb = this.callbackMap.get(rule.getRuleName());
+        if (cb != null) {
+            cb.exception(param, value, standardValue);
+        } else {
+            this.validationRuleStore.getValidationChecker(rule).exception(param, value, standardValue);
+        }
+    }
+
+    /**
+     * Check point.
+     *
+     * @param param         the param
+     * @param rule          the rule
+     * @param bodyObj       the body obj
+     * @param standardValue the standard value
+     */
+    public void checkPoint(ValidationData param, ValidationRule rule, Object bodyObj, Object standardValue) {
+        //check
+        Object value = param.getValue(bodyObj);
+        BaseValidationCheck checker = this.validationRuleStore.getValidationChecker(rule);
+        if ((value != null && standardValue != null) || rule.getAssistType().isNullable()) {
+            boolean valid = checker.check(value, standardValue);
+
+            if (!valid) {
+                this.callExcpetion(param, rule, value, standardValue);
+            }
+
+        }
+        //replace value
+        Object replaceValue = checker.replace(value, standardValue, param);
+        if (replaceValue != null) {
+            param.replaceValue(bodyObj, replaceValue);
+        }
+    }
+
     /**
      * Check data inner rules.
      *
@@ -44,7 +83,7 @@ public class MsgChecker {
      */
     public void checkDataInnerRules(ValidationData data, Object bodyObj) {
         data.getValidationRules().stream().filter(vr -> vr.isUse()).forEach(rule -> {
-            this.validationRuleStore.getValidationChecker(rule).checkPoint(data, rule, bodyObj, rule.getStandardValue(), this.callbackMap.get(rule.getRuleName()));
+            this.checkPoint(data, rule, bodyObj, rule.getStandardValue());
         });
     }
 

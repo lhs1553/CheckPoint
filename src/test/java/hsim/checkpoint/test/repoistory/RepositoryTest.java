@@ -11,17 +11,11 @@ import org.junit.runners.MethodSorters;
 
 import java.util.List;
 
-/**
- * The type Repository test.
- */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class RepositoryTest {
 
     private ValidationDataRepository validationDataRepository = ComponentMap.get(ValidationDataRepository.class);
 
-    /**
-     * Test order 0 save test.
-     */
     @Test
     public void test_order_0_saveTest(){
         ValidationData data = new ValidationData();
@@ -35,9 +29,6 @@ public class RepositoryTest {
         Assert.assertNotNull(data.getId());
     }
 
-    /**
-     * Test order 1 find test.
-     */
     @Test
     public void test_order_1_findTest(){
         List<ValidationData> datas =this.validationDataRepository.findByParamTypeAndMethodAndUrlAndName(ParamType.BODY, "POST", "/test/url", "test");

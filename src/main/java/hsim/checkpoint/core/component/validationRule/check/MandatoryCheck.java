@@ -1,5 +1,6 @@
 package hsim.checkpoint.core.component.validationRule.check;
 
+import hsim.checkpoint.core.component.validationRule.type.BaseValidationCheck;
 import hsim.checkpoint.core.domain.ValidationData;
 import hsim.checkpoint.exception.ValidationLibException;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import org.springframework.http.HttpStatus;
  * The type Mandatory check.
  */
 @NoArgsConstructor
-public class MandatoryCheck extends BaseValidationCheck {
+public class MandatoryCheck implements BaseValidationCheck {
 
 
     @Override
@@ -20,6 +21,11 @@ public class MandatoryCheck extends BaseValidationCheck {
         }
         String sv = String.valueOf(value);
         return !sv.isEmpty();
+    }
+
+    @Override
+    public Object replace(Object value, Object standardValue, ValidationData param) {
+        return null;
     }
 
     @Override

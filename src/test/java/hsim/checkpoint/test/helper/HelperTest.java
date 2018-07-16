@@ -1,7 +1,7 @@
 package hsim.checkpoint.test.helper;
 
 import hsim.checkpoint.core.component.ComponentMap;
-import hsim.checkpoint.core.component.validationRule.check.BaseValidationCheck;
+import hsim.checkpoint.core.component.validationRule.type.BaseValidationCheck;
 import hsim.checkpoint.core.component.validationRule.rule.AssistType;
 import hsim.checkpoint.core.component.validationRule.rule.ValidationRule;
 import hsim.checkpoint.core.component.validationRule.type.BasicCheckRule;
@@ -15,14 +15,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 
-/**
- * The type Helper test.
- */
 public class HelperTest {
 
-    /**
-     * Test addrule.
-     */
     @Test
     public void test_addrule() {
         CheckPointHelper checkPointHelper = new CheckPointHelper();
@@ -34,15 +28,17 @@ public class HelperTest {
         Assert.assertNotNull(rule);
     }
 
-    /**
-     * The type Test rule.
-     */
-    static class TestRule extends BaseValidationCheck {
+    static class TestRule implements BaseValidationCheck {
 
 
         @Override
         public boolean check(Object value, Object standardValue) {
             return true;
+        }
+
+        @Override
+        public Object replace(Object value, Object standardValue, ValidationData param) {
+            return null;
         }
 
         @Override

@@ -1,5 +1,6 @@
 package hsim.checkpoint.core.component.validationRule.check;
 
+import hsim.checkpoint.core.component.validationRule.type.BaseValidationCheck;
 import hsim.checkpoint.core.domain.ValidationData;
 import hsim.checkpoint.exception.ValidationLibException;
 import hsim.checkpoint.util.ValidationObjUtil;
@@ -10,7 +11,7 @@ import org.springframework.http.HttpStatus;
  * The type Max size check.
  */
 @NoArgsConstructor
-public class MaxSizeCheck extends BaseValidationCheck {
+public class MaxSizeCheck implements BaseValidationCheck {
 
 
     @Override
@@ -28,6 +29,11 @@ public class MaxSizeCheck extends BaseValidationCheck {
         }
 
         return true;
+    }
+
+    @Override
+    public Object replace(Object value, Object standardValue, ValidationData param) {
+        return null;
     }
 
     @Override

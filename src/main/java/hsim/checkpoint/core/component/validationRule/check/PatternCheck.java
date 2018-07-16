@@ -1,5 +1,6 @@
 package hsim.checkpoint.core.component.validationRule.check;
 
+import hsim.checkpoint.core.component.validationRule.type.BaseValidationCheck;
 import hsim.checkpoint.core.domain.ValidationData;
 import hsim.checkpoint.exception.ValidationLibException;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import java.util.regex.Pattern;
  * The type Pattern check.
  */
 @NoArgsConstructor
-public class PatternCheck extends BaseValidationCheck {
+public class PatternCheck implements BaseValidationCheck {
 
 
     @Override
@@ -26,6 +27,11 @@ public class PatternCheck extends BaseValidationCheck {
             }
         }
         return true;
+    }
+
+    @Override
+    public Object replace(Object value, Object standardValue, ValidationData param) {
+        return null;
     }
 
     @Override

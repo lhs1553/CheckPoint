@@ -1,6 +1,6 @@
 package hsim.checkpoint.core.component.validationRule.replace;
 
-import hsim.checkpoint.core.component.validationRule.check.BaseValidationCheck;
+import hsim.checkpoint.core.component.validationRule.type.BaseValidationCheck;
 import hsim.checkpoint.core.domain.ValidationData;
 import lombok.NoArgsConstructor;
 
@@ -8,8 +8,13 @@ import lombok.NoArgsConstructor;
  * The type Replace trim.
  */
 @NoArgsConstructor
-public class ReplaceTrim extends BaseValidationCheck {
+public class ReplaceTrim implements BaseValidationCheck {
 
+
+    @Override
+    public boolean check(Object inputValue, Object standardValue) {
+        return true;
+    }
 
     @Override
     public Object replace(Object value, Object standardValue, ValidationData param) {
@@ -18,6 +23,11 @@ public class ReplaceTrim extends BaseValidationCheck {
             return str.trim();
         }
         return null;
+    }
+
+    @Override
+    public void exception(ValidationData param, Object inputValue, Object standardValue) {
+
     }
 
 }

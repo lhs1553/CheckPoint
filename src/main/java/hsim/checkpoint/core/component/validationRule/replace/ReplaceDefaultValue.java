@@ -1,6 +1,6 @@
 package hsim.checkpoint.core.component.validationRule.replace;
 
-import hsim.checkpoint.core.component.validationRule.check.BaseValidationCheck;
+import hsim.checkpoint.core.component.validationRule.type.BaseValidationCheck;
 import hsim.checkpoint.core.domain.ValidationData;
 import lombok.NoArgsConstructor;
 
@@ -8,11 +8,16 @@ import lombok.NoArgsConstructor;
  * The type Replace default value.
  */
 @NoArgsConstructor
-public class ReplaceDefaultValue extends BaseValidationCheck {
+public class ReplaceDefaultValue implements BaseValidationCheck {
 
 
     private boolean isEmptyString(Object value) {
         return (value instanceof String && ((String) value).isEmpty());
+    }
+
+    @Override
+    public boolean check(Object inputValue, Object standardValue) {
+        return true;
     }
 
     @Override
@@ -22,6 +27,11 @@ public class ReplaceDefaultValue extends BaseValidationCheck {
         }
 
         return standardValue;
+    }
+
+    @Override
+    public void exception(ValidationData param, Object inputValue, Object standardValue) {
+
     }
 
 }

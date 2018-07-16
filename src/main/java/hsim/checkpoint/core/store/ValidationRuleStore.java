@@ -1,5 +1,6 @@
 package hsim.checkpoint.core.store;
 
+import hsim.checkpoint.core.component.validationRule.type.BaseValidationCheck;
 import hsim.checkpoint.core.component.validationRule.check.*;
 import hsim.checkpoint.core.component.validationRule.replace.ReplaceBase64;
 import hsim.checkpoint.core.component.validationRule.replace.ReplaceDefaultValue;
@@ -13,7 +14,9 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The type Validation rule store.
@@ -22,6 +25,7 @@ public class ValidationRuleStore {
 
     @Getter
     private List<ValidationRule> rules;
+    private Map<String, BaseValidationCheck> checkHashMap;
 
     /**
      * Instantiates a new Validation rule store.
@@ -30,6 +34,7 @@ public class ValidationRuleStore {
         super();
 
         this.rules = new ArrayList<>();
+        this.checkHashMap = new HashMap<>();
 
         this.addRule(new ValidationRule(BasicCheckRule.Mandatory, StandardValueType.NONE, new MandatoryCheck()).parentDependency().overlapBanRule(BasicCheckRule.DefaultValue).assistType(AssistType.all()));
         this.addRule(new ValidationRule(BasicCheckRule.BlackList, StandardValueType.LIST, new BlackListCheck()).overlapBanRule(BasicCheckRule.WhiteList).assistType(new AssistType().string().enumType()));
@@ -80,7 +85,18 @@ public class ValidationRuleStore {
     public synchronized ValidationRuleStore addRule(ValidationRule rule) {
         rule.setOrderIdx(this.rules.size());
         this.rules.add(rule);
+        this.checkHashMap.put(rule.getRuleName(), rule.getValidationCheck());
         return this;
+    }
+
+    /**
+     * Gets checker.
+     *
+     * @param rule the rule
+     * @return the checker
+     */
+    public BaseValidationCheck getChecker(ValidationRule rule) {
+        return this.checkHashMap.get(rule.getRuleName());
     }
 
 

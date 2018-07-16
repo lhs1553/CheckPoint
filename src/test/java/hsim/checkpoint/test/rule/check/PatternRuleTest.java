@@ -13,9 +13,6 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.springframework.http.HttpStatus;
 
-/**
- * The type Pattern rule test.
- */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class PatternRuleTest {
 
@@ -24,9 +21,6 @@ public class PatternRuleTest {
     private ValidationData data = ruleTestUtil.getDefaultValidationData();
     private BasicCheckRule checkType = BasicCheckRule.Pattern;
 
-    /**
-     * Instantiates a new Pattern rule test.
-     */
     public PatternRuleTest(){
         this.data.setName("email");
 
@@ -35,45 +29,30 @@ public class PatternRuleTest {
         rule.setStandardValue("(\\w+\\.)*\\w+@(\\w+\\.)+[A-Za-z]+");
     }
 
-    /**
-     * Test fail 1.
-     */
     @Test
     public void test_fail_1() {
         obj.setEmail("hsim@checkpoint.com.");
         ruleTestUtil.checkRule(data, obj, checkType, obj.getSize(), false);
     }
 
-    /**
-     * Test fail 2.
-     */
     @Test
     public void test_fail_2() {
         obj.setEmail("taeon@checkpoint.");
         ruleTestUtil.checkRule(data, obj, checkType, obj.getSize(), false);
     }
 
-    /**
-     * Test success 1.
-     */
     @Test
     public void test_success_1() {
         obj.setEmail("hsim@checkpoint.com");
         ruleTestUtil.checkRule(data, obj, checkType, obj.getSize(), true);
     }
 
-    /**
-     * Test success 2.
-     */
     @Test
     public void test_success_2() {
         obj.setEmail("taeon@checkpoint.com");
         ruleTestUtil.checkRule(data, obj, checkType, obj.getSize(), true);
     }
 
-    /**
-     * Test callback change.
-     */
     @Test
     public void test_callback_change() {
         CheckPointHelper helper = new CheckPointHelper();
@@ -83,9 +62,6 @@ public class PatternRuleTest {
         ruleTestUtil.checkRule(data, obj, checkType, obj.getSize(), false, HttpStatus.NOT_ACCEPTABLE);
     }
 
-    /**
-     * The type Pattern callback.
-     */
     public static class PatternCallback implements ValidationInvalidCallback {
         @Override
         public void exception(ValidationData param, Object inputValue, Object standardValue) {

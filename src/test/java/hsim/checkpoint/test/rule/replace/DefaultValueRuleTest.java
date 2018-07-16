@@ -10,9 +10,6 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-/**
- * The type Default value rule test.
- */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DefaultValueRuleTest {
 
@@ -21,9 +18,6 @@ public class DefaultValueRuleTest {
     private ValidationData data = ruleTestUtil.getDefaultValidationData();
     private BasicCheckRule checkType = BasicCheckRule.DefaultValue;
 
-    /**
-     * Instantiates a new Default value rule test.
-     */
     public DefaultValueRuleTest() {
         this.data.setName("name");
         this.data.setTypeClass(String.class);
@@ -34,9 +28,6 @@ public class DefaultValueRuleTest {
         rule.setStandardValue("guest");
     }
 
-    /**
-     * Test fail 1.
-     */
     @Test
     public void test_fail_1() {
         obj.setName("");
@@ -44,9 +35,6 @@ public class DefaultValueRuleTest {
         Assert.assertEquals(obj.getName(), "guest");
     }
 
-    /**
-     * Test fail 2.
-     */
     @Test
     public void test_fail_2() {
         obj.setName(null);
@@ -54,9 +42,6 @@ public class DefaultValueRuleTest {
         Assert.assertEquals(obj.getName(), "guest");
     }
 
-    /**
-     * Test success 1.
-     */
     @Test
     public void test_success_1() {
         obj.setName("hsim");
@@ -64,9 +49,6 @@ public class DefaultValueRuleTest {
         Assert.assertEquals(obj.getName(), "hsim");
     }
 
-    /**
-     * Test success 2.
-     */
     @Test
     public void test_success_2() {
         obj.setName("taeon");

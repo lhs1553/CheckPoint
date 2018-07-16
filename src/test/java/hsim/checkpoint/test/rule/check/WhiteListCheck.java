@@ -18,9 +18,6 @@ import org.springframework.http.HttpStatus;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-/**
- * The type White list check.
- */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class WhiteListCheck {
 
@@ -29,9 +26,6 @@ public class WhiteListCheck {
     private ValidationData data = ruleTestUtil.getDefaultValidationData();
     private BasicCheckRule checkType = BasicCheckRule.WhiteList;
 
-    /**
-     * Instantiates a new White list check.
-     */
     public WhiteListCheck() {
         this.data.setName("name");
 
@@ -40,45 +34,30 @@ public class WhiteListCheck {
         rule.setStandardValue(Arrays.asList(new String[]{"hsim", "taeon", "ayoung", "miho"}));
     }
 
-    /**
-     * Test fail 1.
-     */
     @Test
     public void test_fail_1() {
         obj.setName("hsim.");
         ruleTestUtil.checkRule(data, obj, checkType, obj.getName(), false);
     }
 
-    /**
-     * Test fail 2.
-     */
     @Test
     public void test_fail_2() {
         obj.setName(".taeon");
         ruleTestUtil.checkRule(data, obj, checkType, obj.getName(), false);
     }
 
-    /**
-     * Test success 1.
-     */
     @Test
     public void test_success_1() {
         obj.setName("hsim");
         ruleTestUtil.checkRule(data, obj, checkType, obj.getName(), true);
     }
 
-    /**
-     * Test success 2.
-     */
     @Test
     public void test_success_2() {
         obj.setName("ayoung");
         ruleTestUtil.checkRule(data, obj, checkType, obj.getName(), true);
     }
 
-    /**
-     * Test callback change.
-     */
     @Test
     public void test_callback_change() {
         CheckPointHelper helper = new CheckPointHelper();
@@ -88,9 +67,6 @@ public class WhiteListCheck {
         ruleTestUtil.checkRule(data, obj, checkType, obj.getName(), false, HttpStatus.NOT_ACCEPTABLE);
     }
 
-    /**
-     * The type White list callback.
-     */
     public static class WhiteListCallback implements ValidationInvalidCallback {
         @Override
         public void exception(ValidationData param, Object inputValue, Object standardValue) {
