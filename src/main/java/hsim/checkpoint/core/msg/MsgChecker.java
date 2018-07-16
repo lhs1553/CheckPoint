@@ -70,7 +70,7 @@ public class MsgChecker {
         }
         //replace value
         Object replaceValue = checker.replace(value, standardValue, param);
-        if (replaceValue != null) {
+        if (replaceValue != null && replaceValue != value) {
             param.replaceValue(bodyObj, replaceValue);
         }
     }
