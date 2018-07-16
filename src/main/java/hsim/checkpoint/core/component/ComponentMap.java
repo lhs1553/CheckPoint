@@ -3,11 +3,21 @@ package hsim.checkpoint.core.component;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.ArrayUtils;
 
+/**
+ * The type Component map.
+ */
 @Slf4j
 public class ComponentMap {
 
     private static Object[] objs = {};
 
+    /**
+     * Get t.
+     *
+     * @param <T>   the type parameter
+     * @param cType the c type
+     * @return the t
+     */
     public synchronized static <T> T get(Class<T> cType) {
         for (Object obj : objs) {
             if (obj.getClass().equals(cType)) {

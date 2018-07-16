@@ -17,6 +17,9 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Validation data.
+ */
 @Getter
 @Setter
 @ToString
@@ -54,6 +57,16 @@ public class ValidationData {
     private List<ValidationRule> validationRules = new ArrayList<>();
 
 
+    /**
+     * Instantiates a new Validation data.
+     *
+     * @param detailParam the detail param
+     * @param paramType   the param type
+     * @param reqUrl      the req url
+     * @param parent      the parent
+     * @param field       the field
+     * @param deepLevel   the deep level
+     */
     public ValidationData(DetailParam detailParam, ParamType paramType, ReqUrl reqUrl, ValidationData parent, Field field, int deepLevel) {
 
         this.method = reqUrl.getMethod();
@@ -67,6 +80,12 @@ public class ValidationData {
         this.updateKey(detailParam);
     }
 
+    /**
+     * Init validation rule list.
+     *
+     * @param list    the list
+     * @param refresh the refresh
+     */
     public void initValidationRuleList(List<ValidationRule> list, boolean refresh) {
         if (this.validationRules == null) {
             this.validationRules = list;
@@ -93,6 +112,12 @@ public class ValidationData {
     }
 
 
+    /**
+     * Equal url boolean.
+     *
+     * @param url the url
+     * @return the boolean
+     */
     public boolean equalUrl(ReqUrl url) {
         return url.getMethod().equalsIgnoreCase(this.method) && url.getUrl().equalsIgnoreCase(this.url);
     }
@@ -125,6 +150,12 @@ public class ValidationData {
         }
     }
 
+    /**
+     * Replace value.
+     *
+     * @param bodyObj      the body obj
+     * @param replaceValue the replace value
+     */
     public void replaceValue(Object bodyObj, Object replaceValue) {
         Object parentObj = bodyObj;
         if (this.parentId != null) {
@@ -157,12 +188,24 @@ public class ValidationData {
         return this.getter(child, this.getParentObj(child.getParent(), bodyObj));
     }
 
+    /**
+     * Gets value.
+     *
+     * @param bodyObj the body obj
+     * @return the value
+     */
     public Object getValue(Object bodyObj) {
 
         return this.getParentObj(this, bodyObj);
     }
 
 
+    /**
+     * Update user data validation data.
+     *
+     * @param data the data
+     * @return the validation data
+     */
     public ValidationData updateUserData(ValidationData data) {
         if (data == null) {
             return this;
@@ -170,6 +213,12 @@ public class ValidationData {
         return ValidationObjUtil.objectDeepCopyWithBlackList(data, this, "name", "parent", "type", "deepLevel");
     }
 
+    /**
+     * Update key validation data.
+     *
+     * @param detailParam the detail param
+     * @return the validation data
+     */
     public ValidationData updateKey(DetailParam detailParam) {
         if (detailParam == null) {
             return this;
@@ -181,6 +230,11 @@ public class ValidationData {
         return this;
     }
 
+    /**
+     * Update field.
+     *
+     * @param field the field
+     */
     public void updateField(Field field) {
         this.name = field.getName();
         this.obj = TypeCheckUtil.isObjClass(field);
@@ -191,6 +245,11 @@ public class ValidationData {
         this.type = field.getType().getSimpleName();
     }
 
+    /**
+     * Is query param boolean.
+     *
+     * @return the boolean
+     */
     public boolean isQueryParam() {
         if (this.paramType == null) {
             return false;
@@ -198,6 +257,11 @@ public class ValidationData {
         return this.paramType.equals(ParamType.QUERY_PARAM);
     }
 
+    /**
+     * Is body boolean.
+     *
+     * @return the boolean
+     */
     public boolean isBody() {
         if (this.paramType == null) {
             return false;

@@ -6,6 +6,9 @@ import lombok.ToString;
 
 import java.util.List;
 
+/**
+ * The type Common req model.
+ */
 @Getter
 @Setter
 @ToString

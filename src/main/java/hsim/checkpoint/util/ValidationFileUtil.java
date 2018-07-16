@@ -12,9 +12,18 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.file.Files;
 
+/**
+ * The type Validation file util.
+ */
 @Slf4j
 public class ValidationFileUtil {
 
+    /**
+     * Gets encoding file name.
+     *
+     * @param fn the fn
+     * @return the encoding file name
+     */
     public static String getEncodingFileName(String fn) {
         try {
             return URLEncoder.encode(fn, "UTF-8");
@@ -23,6 +32,13 @@ public class ValidationFileUtil {
         }
     }
 
+    /**
+     * Init file send header.
+     *
+     * @param res         the res
+     * @param filename    the filename
+     * @param contentType the content type
+     */
     public static void initFileSendHeader(HttpServletResponse res, String filename, String contentType) {
 
         filename = getEncodingFileName(filename);
@@ -37,6 +53,13 @@ public class ValidationFileUtil {
 
     }
 
+    /**
+     * Send file to http service response.
+     *
+     * @param file        the file
+     * @param res         the res
+     * @param contentType the content type
+     */
     public static void sendFileToHttpServiceResponse(File file, HttpServletResponse res, String contentType) {
 
         if (file == null || res == null) {
@@ -53,6 +76,13 @@ public class ValidationFileUtil {
         }
     }
 
+    /**
+     * Send file to http service response.
+     *
+     * @param fileName the file name
+     * @param bodyObj  the body obj
+     * @param res      the res
+     */
     public static void sendFileToHttpServiceResponse(String fileName, Object bodyObj, HttpServletResponse res) {
 
         if (fileName == null || bodyObj == null) {

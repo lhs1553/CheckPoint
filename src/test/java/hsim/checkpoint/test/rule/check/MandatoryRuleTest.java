@@ -13,6 +13,9 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.springframework.http.HttpStatus;
 
+/**
+ * The type Mandatory rule test.
+ */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class MandatoryRuleTest {
 
@@ -21,6 +24,9 @@ public class MandatoryRuleTest {
     private ValidationData data = ruleTestUtil.getDefaultValidationData();
     private BasicCheckRule checkType = BasicCheckRule.Mandatory;
 
+    /**
+     * Instantiates a new Mandatory rule test.
+     */
     public MandatoryRuleTest() {
         this.data.setName("loginId");
 
@@ -28,30 +34,45 @@ public class MandatoryRuleTest {
         rule.setUse(true);
     }
 
+    /**
+     * Test fail 1.
+     */
     @Test
     public void test_fail_1() {
         obj.setLoginId(null);
         ruleTestUtil.checkRule(data, obj, checkType, obj.getLoginId(), false);
     }
 
+    /**
+     * Test fail 2.
+     */
     @Test
     public void test_fail_2() {
         obj.setLoginId("");
         ruleTestUtil.checkRule(data, obj, checkType, obj.getLoginId(), false);
     }
 
+    /**
+     * Test success 1.
+     */
     @Test
     public void test_success_1() {
         obj.setLoginId("hsim");
         ruleTestUtil.checkRule(data, obj, checkType, obj.getLoginId(), true);
     }
 
+    /**
+     * Test success 2.
+     */
     @Test
     public void test_success_2() {
         obj.setLoginId("lhs1553");
         ruleTestUtil.checkRule(data, obj, checkType, obj.getLoginId(), true);
     }
 
+    /**
+     * Test callback change.
+     */
     @Test
     public void test_callback_change() {
         CheckPointHelper helper = new CheckPointHelper();
@@ -61,6 +82,9 @@ public class MandatoryRuleTest {
         ruleTestUtil.checkRule(data, obj, checkType, obj.getSize(), false, HttpStatus.NO_CONTENT);
     }
 
+    /**
+     * The type Mandatory callback.
+     */
     public static class MandatoryCallback implements ValidationInvalidCallback {
         @Override
         public void exception(ValidationData param, Object inputValue, Object standardValue) {

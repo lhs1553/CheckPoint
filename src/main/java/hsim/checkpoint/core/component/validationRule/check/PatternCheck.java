@@ -8,6 +8,9 @@ import org.springframework.http.HttpStatus;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The type Pattern check.
+ */
 @NoArgsConstructor
 public class PatternCheck extends BaseValidationCheck {
 

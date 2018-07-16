@@ -8,6 +8,9 @@ import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 
+/**
+ * The type Poi cell style.
+ */
 @Getter
 public class PoiCellStyle {
 
@@ -16,6 +19,11 @@ public class PoiCellStyle {
     private HSSFCellStyle stringCs;
     private HSSFCellStyle dateCs;
 
+    /**
+     * Instantiates a new Poi cell style.
+     *
+     * @param workBook the work book
+     */
     public PoiCellStyle(PoiWorkBook workBook) {
 
         this.stringCs = this.getDefaultExcelCellStyle(workBook);

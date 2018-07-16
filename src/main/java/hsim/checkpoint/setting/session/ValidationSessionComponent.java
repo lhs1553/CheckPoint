@@ -13,6 +13,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+/**
+ * The type Validation session component.
+ */
 public class ValidationSessionComponent {
 
     private static final String SESSION_KEY_MAP = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -42,6 +45,11 @@ public class ValidationSessionComponent {
         return false;
     }
 
+    /**
+     * Session check.
+     *
+     * @param req the req
+     */
     public void sessionCheck(HttpServletRequest req) {
         String authHeader = req.getHeader("Authorization");
         if (authHeader != null && this.validationSessionCheck(authHeader)) {
@@ -58,6 +66,14 @@ public class ValidationSessionComponent {
         throw new ValidationLibException("UnAuthorization", HttpStatus.UNAUTHORIZED);
     }
 
+    /**
+     * Check auth validation session info.
+     *
+     * @param info the info
+     * @param req  the req
+     * @param res  the res
+     * @return the validation session info
+     */
     public ValidationSessionInfo checkAuth(ValidationLoginInfo info, HttpServletRequest req, HttpServletResponse res) {
 
         if (info.getToken() == null || info.getToken().isEmpty()) {
@@ -88,6 +104,13 @@ public class ValidationSessionComponent {
         return key.toString();
     }
 
+    /**
+     * Create session validation session info.
+     *
+     * @param req the req
+     * @param res the res
+     * @return the validation session info
+     */
     public ValidationSessionInfo createSession(HttpServletRequest req, HttpServletResponse res) {
         String key = this.getSessionKey();
         ValidationSessionInfo sessionInfo = new ValidationSessionInfo(req, key);
@@ -96,6 +119,12 @@ public class ValidationSessionComponent {
         return sessionInfo;
     }
 
+    /**
+     * Gets session.
+     *
+     * @param req the req
+     * @return the session
+     */
     public Object getSession(HttpServletRequest req) {
         if (req.getCookies() == null) {
             return null;

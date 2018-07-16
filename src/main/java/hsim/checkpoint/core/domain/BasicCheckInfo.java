@@ -11,6 +11,9 @@ import org.springframework.core.MethodParameter;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * The type Basic check info.
+ */
 @ToString
 @Getter
 @Slf4j
@@ -23,6 +26,13 @@ public class BasicCheckInfo {
     private MethodParameter parameter;
     private String body;
 
+    /**
+     * Instantiates a new Basic check info.
+     *
+     * @param httpReq the http req
+     * @param param   the param
+     * @param log     the log
+     */
     public BasicCheckInfo(HttpServletRequest httpReq, MethodParameter param, boolean log) {
         this.req = httpReq;
         this.parameter = param;
@@ -41,6 +51,11 @@ public class BasicCheckInfo {
         }
     }
 
+    /**
+     * Is url mapping boolean.
+     *
+     * @return the boolean
+     */
     public boolean isUrlMapping() {
         if (this.detailParam == null) {
             return false;
@@ -48,10 +63,18 @@ public class BasicCheckInfo {
         return this.detailParam.isUrlMapping();
     }
 
+    /**
+     * Is list body boolean.
+     *
+     * @return the boolean
+     */
     public boolean isListBody() {
         return (this.parameter.getParameterType().equals(java.util.List.class));
     }
 
+    /**
+     * Logging.
+     */
     public void logging() {
         if (this.body == null) {
             return;
@@ -61,6 +84,11 @@ public class BasicCheckInfo {
         log.info(this.body);
     }
 
+    /**
+     * Gets unique key.
+     *
+     * @return the unique key
+     */
     public String getUniqueKey() {
         return this.isUrlMapping() ? this.reqUrl.getUniqueKey() : this.detailParam.getMethodKey();
     }

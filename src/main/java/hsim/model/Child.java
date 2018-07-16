@@ -3,6 +3,9 @@ package hsim.model;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * The type Child.
+ */
 @Getter
 @Setter
 public class Child {

@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * The type Poi work sheet.
+ */
 @Getter
 public class PoiWorkSheet {
 
@@ -19,14 +22,31 @@ public class PoiWorkSheet {
     private HSSFSheet sheet;
     private PoiCellStyle style;
 
+    /**
+     * Instantiates a new Poi work sheet.
+     *
+     * @param workBook the work book
+     */
     public PoiWorkSheet(PoiWorkBook workBook) {
         this.init(workBook, null);
     }
 
+    /**
+     * Instantiates a new Poi work sheet.
+     *
+     * @param workBook  the work book
+     * @param sheetName the sheet name
+     */
     public PoiWorkSheet(PoiWorkBook workBook, String sheetName) {
         this.init(workBook, sheetName);
     }
 
+    /**
+     * Next row row.
+     *
+     * @param cnt the cnt
+     * @return the row
+     */
     public Row nextRow(int cnt) {
         Row lastrow = null;
         for (int i = 0; i < cnt; i++) {
@@ -35,10 +55,20 @@ public class PoiWorkSheet {
         return lastrow;
     }
 
+    /**
+     * Next row row.
+     *
+     * @return the row
+     */
     public Row nextRow() {
         return this.sheet.createRow(this.sheet.getLastRowNum() + 1);
     }
 
+    /**
+     * Gets last row.
+     *
+     * @return the last row
+     */
     public Row getLastRow() {
         return this.sheet.getRow(this.sheet.getLastRowNum());
     }
@@ -62,6 +92,12 @@ public class PoiWorkSheet {
         return cellCnt < 0 ? 0 : cellCnt;
     }
 
+    /**
+     * Create title cells list.
+     *
+     * @param strs the strs
+     * @return the list
+     */
     public List<Cell> createTitleCells(String... strs) {
         List<Cell> cells = new ArrayList<>();
 
@@ -72,12 +108,25 @@ public class PoiWorkSheet {
         return cells;
     }
 
+    /**
+     * Create title cells.
+     *
+     * @param width the width
+     * @param strs  the strs
+     */
     public void createTitleCells(double width, String... strs) {
         for (String s : strs) {
             this.createTitleCell(s, width);
         }
     }
 
+    /**
+     * Create title cell cell.
+     *
+     * @param str   the str
+     * @param width the width
+     * @return the cell
+     */
     public Cell createTitleCell(String str, double width) {
 
         int cellCnt = this.getCellCnt();
@@ -93,6 +142,11 @@ public class PoiWorkSheet {
     }
 
 
+    /**
+     * Create value cells.
+     *
+     * @param values the values
+     */
     public void createValueCells(Object... values) {
         for (Object value : values) {
             if (value == null) {
@@ -124,6 +178,12 @@ public class PoiWorkSheet {
         return cell;
     }
 
+    /**
+     * Create cell cell.
+     *
+     * @param value the value
+     * @return the cell
+     */
     public Cell createCell(double value) {
 
         Cell cell = this.getNextCell(CellType.NUMERIC);
@@ -132,6 +192,12 @@ public class PoiWorkSheet {
         return cell;
     }
 
+    /**
+     * Create cell cell.
+     *
+     * @param value the value
+     * @return the cell
+     */
     public Cell createCell(Long value) {
         Cell cell = this.getNextCell(CellType.NUMERIC);
         cell.setCellValue(value);
@@ -139,6 +205,12 @@ public class PoiWorkSheet {
         return cell;
     }
 
+    /**
+     * Create cell cell.
+     *
+     * @param value the value
+     * @return the cell
+     */
     public Cell createCell(long value) {
         Cell cell = this.getNextCell(CellType.NUMERIC);
         cell.setCellValue(value);
@@ -147,6 +219,12 @@ public class PoiWorkSheet {
     }
 
 
+    /**
+     * Create cell cell.
+     *
+     * @param obj the obj
+     * @return the cell
+     */
     public Cell createCell(Object obj) {
 
         Cell cell = this.getNextCell(CellType.STRING);
@@ -155,6 +233,12 @@ public class PoiWorkSheet {
         return cell;
     }
 
+    /**
+     * Create cell cell.
+     *
+     * @param str the str
+     * @return the cell
+     */
     public Cell createCell(String str) {
 
         Cell cell = this.getNextCell(CellType.STRING);
@@ -163,6 +247,12 @@ public class PoiWorkSheet {
         return cell;
     }
 
+    /**
+     * Create cell cell.
+     *
+     * @param date the date
+     * @return the cell
+     */
     public Cell createCell(Date date) {
 
         Cell cell = this.getNextCell(CellType.STRING);

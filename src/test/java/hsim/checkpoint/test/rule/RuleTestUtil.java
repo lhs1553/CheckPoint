@@ -11,11 +11,19 @@ import lombok.Getter;
 import org.junit.Assert;
 import org.springframework.http.HttpStatus;
 
+/**
+ * The type Rule test util.
+ */
 public class RuleTestUtil {
 
     @Getter
     private MsgChecker msgChecker = ComponentMap.get(MsgChecker.class);
 
+    /**
+     * Gets default validation data.
+     *
+     * @return the default validation data
+     */
     public ValidationData getDefaultValidationData() {
         ValidationData data = new ValidationData();
         data.setValidationRules(ComponentMap.get(ValidationRuleStore.class).getRules());
@@ -23,10 +31,29 @@ public class RuleTestUtil {
         return data;
     }
 
+    /**
+     * Check rule.
+     *
+     * @param data       the data
+     * @param obj        the obj
+     * @param checkRule  the check rule
+     * @param inputValue the input value
+     * @param success    the success
+     */
     public void checkRule(ValidationData data, Object obj, BasicCheckRule checkRule, Object inputValue, boolean success) {
        this.checkRule(data, obj, checkRule, inputValue, success, null);
     }
 
+    /**
+     * Check rule.
+     *
+     * @param data       the data
+     * @param obj        the obj
+     * @param checkRule  the check rule
+     * @param inputValue the input value
+     * @param success    the success
+     * @param failStatus the fail status
+     */
     public void checkRule(ValidationData data, Object obj, BasicCheckRule checkRule, Object inputValue, boolean success, HttpStatus failStatus) {
         try {
             msgChecker.checkDataInnerRules(data, obj);

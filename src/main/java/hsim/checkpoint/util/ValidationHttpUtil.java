@@ -16,6 +16,12 @@ import java.io.InputStreamReader;
 @Slf4j
 public class ValidationHttpUtil {
 
+    /**
+     * Read body string.
+     *
+     * @param request the request
+     * @return the string
+     */
     public static String readBody(HttpServletRequest request) {
 
         BufferedReader input = null;

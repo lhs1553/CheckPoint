@@ -15,8 +15,14 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 
+/**
+ * The type Helper test.
+ */
 public class HelperTest {
 
+    /**
+     * Test addrule.
+     */
     @Test
     public void test_addrule() {
         CheckPointHelper checkPointHelper = new CheckPointHelper();
@@ -28,6 +34,9 @@ public class HelperTest {
         Assert.assertNotNull(rule);
     }
 
+    /**
+     * The type Test rule.
+     */
     static class TestRule extends BaseValidationCheck {
 
 

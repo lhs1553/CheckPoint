@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Value;
 
+/**
+ * The type Validation config.
+ */
 @ToString
 @Getter
 public class ValidationConfig {

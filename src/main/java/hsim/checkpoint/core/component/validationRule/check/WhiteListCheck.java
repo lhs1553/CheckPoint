@@ -7,6 +7,9 @@ import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
+/**
+ * The type White list check.
+ */
 @NoArgsConstructor
 public class WhiteListCheck extends BaseValidationCheck {
 

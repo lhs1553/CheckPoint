@@ -6,6 +6,9 @@ import hsim.checkpoint.util.ValidationObjUtil;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 
+/**
+ * The type Max size check.
+ */
 @NoArgsConstructor
 public class MaxSizeCheck extends BaseValidationCheck {
 

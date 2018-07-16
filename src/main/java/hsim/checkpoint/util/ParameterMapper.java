@@ -14,6 +14,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The type Parameter mapper.
+ */
 @Slf4j
 public class ParameterMapper {
 
@@ -23,10 +26,27 @@ public class ParameterMapper {
         return "set" + name.substring(0, 1).toUpperCase() + name.substring(1);
     }
 
+    /**
+     * Request paramater to object t.
+     *
+     * @param <T> the type parameter
+     * @param req the req
+     * @param c   the c
+     * @return the t
+     */
     public static <T> T requestParamaterToObject(NativeWebRequest req, Class<T> c) {
         return requestParamaterToObject((HttpServletRequest) req.getNativeRequest(), c, "UTF-8");
     }
 
+    /**
+     * Request paramater to object t.
+     *
+     * @param <T>     the type parameter
+     * @param request the request
+     * @param c       the c
+     * @param charset the charset
+     * @return the t
+     */
     public static <T> T requestParamaterToObject(HttpServletRequest request, Class<T> c, String charset) {
 
         Map<String, String> map = new HashMap<>();
@@ -62,6 +82,13 @@ public class ParameterMapper {
 
     }
 
+    /**
+     * Find method method.
+     *
+     * @param c          the c
+     * @param methodName the method name
+     * @return the method
+     */
     public static Method findMethod(Class<?> c, String methodName) {
         for (Method m : c.getMethods()) {
             if (!m.getName().equalsIgnoreCase(methodName)) {
@@ -76,6 +103,14 @@ public class ParameterMapper {
         return null;
     }
 
+    /**
+     * Cast value object.
+     *
+     * @param m        the m
+     * @param castType the cast type
+     * @param value    the value
+     * @return the object
+     */
     @SuppressWarnings("PMD.LooseCoupling")
     public static Object castValue(Method m, Class<?> castType, String value) {
 
@@ -122,6 +157,13 @@ public class ParameterMapper {
     }
 
 
+    /**
+     * Map to object object.
+     *
+     * @param map the map
+     * @param c   the c
+     * @return the object
+     */
     public static Object mapToObject(Map<String, String> map, Class<?> c) {
 
         Method m = null;

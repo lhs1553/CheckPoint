@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * The type Validation store.
+ */
 @Slf4j
 public class ValidationStore {
 
@@ -23,6 +26,9 @@ public class ValidationStore {
 
     private ValidationDataRepository repository = ComponentMap.get(ValidationDataRepository.class);
 
+    /**
+     * Instantiates a new Validation store.
+     */
     public ValidationStore() {
     }
 
@@ -63,11 +69,21 @@ public class ValidationStore {
         });
     }
 
+    /**
+     * Refresh.
+     */
     public void refresh() {
         this.instanceInit();
         this.validationDataInit();
     }
 
+    /**
+     * Gets validation datas.
+     *
+     * @param paramType the param type
+     * @param key       the key
+     * @return the validation datas
+     */
     public List<ValidationData> getValidationDatas(ParamType paramType, String key) {
         if (this.urlMap == null || this.validationDataRuleListMap == null) {
             refresh();

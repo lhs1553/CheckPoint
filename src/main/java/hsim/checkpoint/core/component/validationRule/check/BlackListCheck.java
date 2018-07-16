@@ -7,6 +7,9 @@ import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
+/**
+ * The type Black list check.
+ */
 @NoArgsConstructor
 public class BlackListCheck extends BaseValidationCheck {
 

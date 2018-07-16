@@ -12,6 +12,9 @@ import org.junit.runners.MethodSorters;
 
 import java.util.Base64;
 
+/**
+ * The type Base 64 rule test.
+ */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class Base64RuleTest {
 
@@ -20,6 +23,9 @@ public class Base64RuleTest {
     private ValidationData data = ruleTestUtil.getDefaultValidationData();
     private BasicCheckRule checkType = BasicCheckRule.Base64;
 
+    /**
+     * Instantiates a new Base 64 rule test.
+     */
     public Base64RuleTest() {
         this.data.setName("domain");
         this.data.setTypeClass(String.class);
@@ -28,6 +34,9 @@ public class Base64RuleTest {
         rule.setUse(true);
     }
 
+    /**
+     * Test fail 1.
+     */
     @Test
     public void test_fail_1() {
         String plainText = "hsim@checkpoint.com";
@@ -36,6 +45,9 @@ public class Base64RuleTest {
         Assert.assertEquals(obj.getDomain(), plainText);
     }
 
+    /**
+     * Test fail 2.
+     */
     @Test
     public void test_fail_2() {
         String plainText = "hsim@checkpoint.com";
@@ -45,6 +57,9 @@ public class Base64RuleTest {
         Assert.assertEquals(obj.getDomain(), base64Text);
     }
 
+    /**
+     * Test success 1.
+     */
     @Test
     public void test_success_1() {
         String plainText = "hsim@checkpoint.com";

@@ -4,6 +4,9 @@ import hsim.checkpoint.core.component.validationRule.check.BaseValidationCheck;
 import hsim.checkpoint.core.domain.ValidationData;
 import lombok.NoArgsConstructor;
 
+/**
+ * The type Replace trim.
+ */
 @NoArgsConstructor
 public class ReplaceTrim extends BaseValidationCheck {
 

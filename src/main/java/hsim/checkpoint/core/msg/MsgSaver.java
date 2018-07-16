@@ -18,6 +18,9 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * The type Msg saver.
+ */
 @Slf4j
 public class MsgSaver {
 
@@ -26,10 +29,18 @@ public class MsgSaver {
     private ValidationConfig validationConfig = ComponentMap.get(ValidationConfig.class);
     private AnnotationScanner annotationScanner = ComponentMap.get(AnnotationScanner.class);
 
+    /**
+     * Instantiates a new Msg saver.
+     */
     public MsgSaver() {
     }
 
 
+    /**
+     * Annotation scan.
+     *
+     * @param maxDeepLeel the max deep leel
+     */
     public void annotationScan(final int maxDeepLeel) {
 
         Arrays.stream(ParamType.values()).forEach(paramType -> this.initDetailParams(paramType, maxDeepLeel));
@@ -51,6 +62,14 @@ public class MsgSaver {
         });
     }
 
+    /**
+     * Url check and save.
+     *
+     * @param basicCheckInfo the basic check info
+     * @param paramType      the param type
+     * @param reqUrl         the req url
+     * @param type           the type
+     */
     public void urlCheckAndSave(BasicCheckInfo basicCheckInfo, ParamType paramType, ReqUrl reqUrl, Class<?> type) {
         if (!this.validationConfig.isFreshUrlSave() || !basicCheckInfo.isUrlMapping()) {
             return;

@@ -10,6 +10,9 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+/**
+ * The type Trim rule test.
+ */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TrimRuleTest {
 
@@ -18,6 +21,9 @@ public class TrimRuleTest {
     private ValidationData data = ruleTestUtil.getDefaultValidationData();
     private BasicCheckRule checkType = BasicCheckRule.Trim;
 
+    /**
+     * Instantiates a new Trim rule test.
+     */
     public TrimRuleTest() {
         this.data.setName("name");
         this.data.setTypeClass(String.class);
@@ -26,6 +32,9 @@ public class TrimRuleTest {
         rule.setUse(true);
     }
 
+    /**
+     * Test fail 1.
+     */
     @Test
     public void test_fail_1() {
         obj.setName("taeon");
@@ -33,6 +42,9 @@ public class TrimRuleTest {
         Assert.assertEquals(obj.getName(), "taeon");
     }
 
+    /**
+     * Test fail 2.
+     */
     @Test
     public void test_fail_2() {
         obj.setName(null);
@@ -40,6 +52,9 @@ public class TrimRuleTest {
         Assert.assertEquals(obj.getName(), null);
     }
 
+    /**
+     * Test success 1.
+     */
     @Test
     public void test_success_1() {
         obj.setName("hsim  ");
@@ -47,6 +62,9 @@ public class TrimRuleTest {
         Assert.assertEquals(obj.getName(), "hsim");
     }
 
+    /**
+     * Test success 2.
+     */
     @Test
     public void test_success_2() {
         obj.setName("    taeon   ");

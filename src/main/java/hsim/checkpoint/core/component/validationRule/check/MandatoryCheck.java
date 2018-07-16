@@ -5,6 +5,9 @@ import hsim.checkpoint.exception.ValidationLibException;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 
+/**
+ * The type Mandatory check.
+ */
 @NoArgsConstructor
 public class MandatoryCheck extends BaseValidationCheck {
 

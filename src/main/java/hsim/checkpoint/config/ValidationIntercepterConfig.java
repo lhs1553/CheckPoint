@@ -6,6 +6,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
 
+/**
+ * The type Validation intercepter config.
+ */
 public class ValidationIntercepterConfig implements WebMvcConfigurer {
 
     @Override

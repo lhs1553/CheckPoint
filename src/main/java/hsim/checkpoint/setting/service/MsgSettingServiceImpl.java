@@ -21,6 +21,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * The type Msg setting service.
+ */
 @Slf4j
 public class MsgSettingServiceImpl implements MsgSettingService {
 
@@ -62,6 +65,11 @@ public class MsgSettingServiceImpl implements MsgSettingService {
         this.validationStore.refresh();
     }
 
+    /**
+     * Update from file.
+     *
+     * @param file the file
+     */
     public void updateFromFile(MultipartFile file) {
         ObjectMapper objectMapper = ValidationObjUtil.getDefaultObjectMapper();
 
@@ -95,6 +103,11 @@ public class MsgSettingServiceImpl implements MsgSettingService {
         }
     }
 
+    /**
+     * Update from files.
+     *
+     * @param files the files
+     */
     public void updateFromFiles(List<MultipartFile> files) {
         for (MultipartFile file : files) {
             this.updateFromFile(file);

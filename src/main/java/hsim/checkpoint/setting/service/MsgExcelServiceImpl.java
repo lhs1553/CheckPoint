@@ -16,6 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * The type Msg excel service.
+ */
 @Slf4j
 public class MsgExcelServiceImpl implements MsgExcelService {
 

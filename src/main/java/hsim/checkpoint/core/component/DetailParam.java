@@ -13,6 +13,9 @@ import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Detail param.
+ */
 @Getter
 @ToString
 public class DetailParam {
@@ -21,12 +24,24 @@ public class DetailParam {
     private Method parentMethod;
     private Class<?> parentClass;
 
+    /**
+     * Instantiates a new Detail param.
+     *
+     * @param param       the param
+     * @param method      the method
+     * @param parentClass the parent class
+     */
     public DetailParam(Parameter param, Method method, Class<?> parentClass) {
         this.parameter = param;
         this.parentMethod = method;
         this.parentClass = parentClass;
     }
 
+    /**
+     * Is url mapping boolean.
+     *
+     * @return the boolean
+     */
     public boolean isUrlMapping() {
         if (parentMethod == null) {
             return false;
@@ -56,6 +71,11 @@ public class DetailParam {
         return url;
     }
 
+    /**
+     * Gets req urls.
+     *
+     * @return the req urls
+     */
     public List<ReqUrl> getReqUrls() {
 
         String url = this.getClassMappingUrl(this.getParentClass());
@@ -71,10 +91,20 @@ public class DetailParam {
         return list;
     }
 
+    /**
+     * Gets parameter key.
+     *
+     * @return the parameter key
+     */
     public String getParameterKey() {
         return String.valueOf(this.parameter.hashCode());
     }
 
+    /**
+     * Gets method key.
+     *
+     * @return the method key
+     */
     public String getMethodKey() {
         return String.valueOf(this.parentMethod.hashCode());
     }

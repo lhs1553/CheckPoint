@@ -5,6 +5,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Method;
 
+/**
+ * The type Request annotation.
+ */
 public class RequestAnnotation {
 
     private RequestMapping requestMapping;
@@ -13,6 +16,11 @@ public class RequestAnnotation {
     private DeleteMapping deleteMapping;
     private GetMapping getMapping;
 
+    /**
+     * Instantiates a new Request annotation.
+     *
+     * @param method the method
+     */
     public RequestAnnotation(Method method) {
         this.requestMapping = (RequestMapping) AnnotationUtil.getAnnotation(method.getAnnotations(), RequestMapping.class);
         this.postMapping = (PostMapping) AnnotationUtil.getAnnotation(method.getAnnotations(), PostMapping.class);
@@ -22,6 +30,11 @@ public class RequestAnnotation {
 
     }
 
+    /**
+     * Get method request method [ ].
+     *
+     * @return the request method [ ]
+     */
     public RequestMethod[] getMethod() {
         if (this.requestMapping != null) {
             return this.requestMapping.method();
@@ -41,6 +54,11 @@ public class RequestAnnotation {
         return null;
     }
 
+    /**
+     * Get value string [ ].
+     *
+     * @return the string [ ]
+     */
     public String[] getValue() {
         if (this.requestMapping != null) {
             return this.requestMapping.value();

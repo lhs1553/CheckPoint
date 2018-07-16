@@ -4,6 +4,9 @@ import hsim.checkpoint.core.component.validationRule.check.BaseValidationCheck;
 import hsim.checkpoint.core.domain.ValidationData;
 import lombok.NoArgsConstructor;
 
+/**
+ * The type Replace default value.
+ */
 @NoArgsConstructor
 public class ReplaceDefaultValue extends BaseValidationCheck {
 

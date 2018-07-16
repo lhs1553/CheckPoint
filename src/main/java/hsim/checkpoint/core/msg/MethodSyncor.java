@@ -17,6 +17,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * The type Method syncor.
+ */
 @Slf4j
 public class MethodSyncor {
 
@@ -25,9 +28,15 @@ public class MethodSyncor {
     private ValidationConfig validationConfig = ComponentMap.get(ValidationConfig.class);
     private AnnotationScanner annotationScanner = ComponentMap.get(AnnotationScanner.class);
 
+    /**
+     * Instantiates a new Method syncor.
+     */
     public MethodSyncor() {
     }
 
+    /**
+     * Update method key async.
+     */
     public void updateMethodKeyAsync() {
         new Thread(() -> {
             this.updateMethodKey();

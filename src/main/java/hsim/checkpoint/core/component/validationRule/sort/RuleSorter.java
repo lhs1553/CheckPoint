@@ -4,6 +4,9 @@ import hsim.checkpoint.core.component.validationRule.rule.ValidationRule;
 
 import java.util.Comparator;
 
+/**
+ * The type Rule sorter.
+ */
 public class RuleSorter implements Comparator {
 
     @Override

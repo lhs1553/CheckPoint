@@ -8,6 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.UnsupportedEncodingException;
 import java.util.Base64;
 
+/**
+ * The type Replace base 64.
+ */
 @Slf4j
 @NoArgsConstructor
 public class ReplaceBase64 extends BaseValidationCheck {

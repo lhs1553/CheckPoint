@@ -23,6 +23,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
+/**
+ * The type Validation resolver.
+ */
 @Slf4j
 public class ValidationResolver implements HandlerMethodArgumentResolver {
 
@@ -34,11 +37,19 @@ public class ValidationResolver implements HandlerMethodArgumentResolver {
 
     private ValidationConfig validationConfig = ComponentMap.get(ValidationConfig.class);
 
+    /**
+     * Instantiates a new Validation resolver.
+     */
     public ValidationResolver() {
         super();
         this.objectMapper = ValidationObjUtil.getDefaultObjectMapper();
     }
 
+    /**
+     * Replace object mapper.
+     *
+     * @param objectMapper the object mapper
+     */
     public void replaceObjectMapper(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }

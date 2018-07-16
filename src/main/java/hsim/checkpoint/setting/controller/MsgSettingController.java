@@ -27,6 +27,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Base64;
 import java.util.List;
 
+/**
+ * The type Msg setting controller.
+ */
 @CrossOrigin(origins = "*")
 public class MsgSettingController {
 
@@ -35,16 +38,37 @@ public class MsgSettingController {
     private ValidationSessionComponent validationSessionComponent = ComponentMap.get(ValidationSessionComponent.class);
     private MsgSaver msgSaver = ComponentMap.get(MsgSaver.class);
 
+    /**
+     * Annotation scan.
+     *
+     * @param maxdeeplevel the maxdeeplevel
+     * @param req          the req
+     * @param res          the res
+     */
     @GetMapping("/setting/scan/{maxdeeplevel}")
     public void annotationScan(@PathVariable int maxdeeplevel, HttpServletRequest req, HttpServletResponse res) {
         this.msgSaver.annotationScan(maxdeeplevel);
     }
 
+    /**
+     * Login validation session info.
+     *
+     * @param info the info
+     * @param req  the req
+     * @param res  the res
+     * @return the validation session info
+     */
     @PostMapping("/setting/auth")
     public ValidationSessionInfo login(@RequestBody ValidationLoginInfo info, HttpServletRequest req, HttpServletResponse res) {
         return this.validationSessionComponent.checkAuth(info, req, res);
     }
 
+    /**
+     * Download api json all.
+     *
+     * @param req the req
+     * @param res the res
+     */
     @GetMapping("/setting/download/api/json/all")
     public void downloadApiJsonAll(HttpServletRequest req, HttpServletResponse res) {
         //this.validationSessionComponent.sessionCheck(req);
@@ -52,6 +76,14 @@ public class MsgSettingController {
         ValidationFileUtil.sendFileToHttpServiceResponse("validation.json", list, res);
     }
 
+    /**
+     * Download api json.
+     *
+     * @param req    the req
+     * @param method the method
+     * @param url    the url
+     * @param res    the res
+     */
     @GetMapping("/setting/download/api/json")
     public void downloadApiJson(HttpServletRequest req, @RequestParam("method") String method, @RequestParam("url") String url, HttpServletResponse res) {
         //this.validationSessionComponent.sessionCheck(req);
@@ -60,6 +92,12 @@ public class MsgSettingController {
         ValidationFileUtil.sendFileToHttpServiceResponse(method + url.replaceAll("/", "-") + ".json", list, res);
     }
 
+    /**
+     * Download api all.
+     *
+     * @param req the req
+     * @param res the res
+     */
     @GetMapping("/setting/download/api/excel/all")
     public void downloadApiAll(HttpServletRequest req, HttpServletResponse res) {
         //this.validationSessionComponent.sessionCheck(req);
@@ -67,6 +105,14 @@ public class MsgSettingController {
         workBook.writeFile("ValidationApis_" + System.currentTimeMillis(), res);
     }
 
+    /**
+     * Download api.
+     *
+     * @param req    the req
+     * @param method the method
+     * @param url    the url
+     * @param res    the res
+     */
     @GetMapping("/setting/download/api/excel")
     public void downloadApi(HttpServletRequest req, @RequestParam("method") String method, @RequestParam("url") String url, HttpServletResponse res) {
         //this.validationSessionComponent.sessionCheck(req);
@@ -75,6 +121,11 @@ public class MsgSettingController {
         workBook.writeFile("ValidationApis_" + System.currentTimeMillis(), res);
     }
 
+    /**
+     * Upload setting.
+     *
+     * @param req the req
+     */
     @PostMapping("/setting/upload/json")
     public void uploadSetting(HttpServletRequest req) {
         this.validationSessionComponent.sessionCheck(req);
@@ -82,12 +133,24 @@ public class MsgSettingController {
     }
 
 
+    /**
+     * Req url all list list.
+     *
+     * @param req the req
+     * @return the list
+     */
     @GetMapping("/setting/url/list/all")
     public List<ReqUrl> reqUrlAllList(HttpServletRequest req) {
         this.validationSessionComponent.sessionCheck(req);
         return this.msgSettingService.getAllUrlList();
     }
 
+    /**
+     * Gets validation data lists.
+     *
+     * @param req the req
+     * @return the validation data lists
+     */
     @GetMapping("/setting/param/from/url")
     public List<ValidationData> getValidationDataLists(HttpServletRequest req) {
         this.validationSessionComponent.sessionCheck(req);
@@ -95,18 +158,36 @@ public class MsgSettingController {
         return this.msgSettingService.getValidationData(data.getParamType(), data.getMethod(), data.getUrl());
     }
 
+    /**
+     * Update validation data lists.
+     *
+     * @param req   the req
+     * @param datas the datas
+     */
     @PostMapping("/setting/update/param/from/url")
     public void updateValidationDataLists(HttpServletRequest req, @RequestBody List<ValidationData> datas) {
         this.validationSessionComponent.sessionCheck(req);
         this.msgSettingService.updateValidationData(datas);
     }
 
+    /**
+     * Delete validation data lists.
+     *
+     * @param req   the req
+     * @param datas the datas
+     */
     @DeleteMapping("/setting/delete/param/from/url")
     public void deleteValidationDataLists(HttpServletRequest req, @RequestBody List<ValidationData> datas) {
         this.validationSessionComponent.sessionCheck(req);
         this.msgSettingService.deleteValidationData(datas);
     }
 
+    /**
+     * Delete validation url.
+     *
+     * @param req    the req
+     * @param reqUrl the req url
+     */
     @DeleteMapping("/setting/delete/url")
     public void deleteValidationUrl(HttpServletRequest req, @RequestBody ReqUrl reqUrl) {
         this.validationSessionComponent.sessionCheck(req);
@@ -114,21 +195,41 @@ public class MsgSettingController {
     }
 
 
+    /**
+     * Validation exception resolver validation exception resolver.
+     *
+     * @return the validation exception resolver
+     */
     @Bean
     public ValidationExceptionResolver validationExceptionResolver() {
         return ComponentMap.get(ValidationExceptionResolver.class);
     }
 
+    /**
+     * Intercepter config validation intercepter config.
+     *
+     * @return the validation intercepter config
+     */
     @Bean
     public ValidationIntercepterConfig intercepterConfig() {
         return ComponentMap.get(ValidationIntercepterConfig.class);
     }
 
+    /**
+     * Validation config validation config.
+     *
+     * @return the validation config
+     */
     @Bean
     public ValidationConfig validationConfig() {
         return ComponentMap.get(ValidationConfig.class);
     }
 
+    /**
+     * Init check point init check point.
+     *
+     * @return the init check point
+     */
     @Bean
     public InitCheckPoint initCheckPoint() {
         return ComponentMap.get(InitCheckPoint.class);

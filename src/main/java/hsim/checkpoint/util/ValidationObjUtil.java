@@ -13,6 +13,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
+/**
+ * The type Validation obj util.
+ */
 @Slf4j
 public class ValidationObjUtil {
 
@@ -21,6 +24,11 @@ public class ValidationObjUtil {
     private static final String SET_METHOD_PREFIX = "set";
     private static final String IS_METHOD_PREFIX = "is";
 
+    /**
+     * Gets default object mapper.
+     *
+     * @return the default object mapper
+     */
     public static ObjectMapper getDefaultObjectMapper() {
 
         ObjectMapper mapper = new ObjectMapper();
@@ -51,6 +59,12 @@ public class ValidationObjUtil {
         return false;
     }
 
+    /**
+     * Is number obj boolean.
+     *
+     * @param type the type
+     * @return the boolean
+     */
     public static boolean isNumberObj(Object type) {
         try {
             Double.valueOf(type + "");
@@ -60,16 +74,34 @@ public class ValidationObjUtil {
         return true;
     }
 
+    /**
+     * Is number type boolean.
+     *
+     * @param type the type
+     * @return the boolean
+     */
     public static boolean isNumberType(Class<?> type) {
         return isIntType(type) || isDoubleType(type);
     }
 
+    /**
+     * Is double type boolean.
+     *
+     * @param type the type
+     * @return the boolean
+     */
     public static boolean isDoubleType(Class<?> type) {
         return (type.isPrimitive() && type == float.class) || (type.isPrimitive() && type == double.class)
                 || (!type.isPrimitive() && type == Float.class) || (!type.isPrimitive() && type == Double.class);
     }
 
 
+    /**
+     * Is int type boolean.
+     *
+     * @param type the type
+     * @return the boolean
+     */
     public static boolean isIntType(Class<?> type) {
         return (type.isPrimitive() && type == int.class) || (type.isPrimitive() && type == long.class)
                 || (!type.isPrimitive() && type == Integer.class) || (!type.isPrimitive() && type == Long.class);
@@ -97,6 +129,13 @@ public class ValidationObjUtil {
         return null;
     }
 
+    /**
+     * Gets setter method not check param type.
+     *
+     * @param cType     the c type
+     * @param fieldName the field name
+     * @return the setter method not check param type
+     */
     public static Method getSetterMethodNotCheckParamType(Class<?> cType, String fieldName) {
         String methodName = getMethodName(fieldName, SET_METHOD_PREFIX);
         Method[] methods = cType.getMethods();
@@ -108,6 +147,14 @@ public class ValidationObjUtil {
         return null;
     }
 
+    /**
+     * Gets setter method.
+     *
+     * @param cType     the c type
+     * @param fieldName the field name
+     * @param paramType the param type
+     * @return the setter method
+     */
     public static Method getSetterMethod(Class<?> cType, String fieldName, Class<?> paramType) {
 
         Class<?> subType = getSubType(paramType);
@@ -125,10 +172,23 @@ public class ValidationObjUtil {
         }
     }
 
+    /**
+     * Gets method name.
+     *
+     * @param name   the name
+     * @param prefix the prefix
+     * @return the method name
+     */
     public static String getMethodName(String name, String prefix) {
         return prefix + name.substring(0, 1).toUpperCase() + name.substring(1);
     }
 
+    /**
+     * Gets field name from method.
+     *
+     * @param m the m
+     * @return the field name from method
+     */
     public static String getFieldNameFromMethod(Method m) {
         String methodName = m.getName();
 
@@ -144,6 +204,13 @@ public class ValidationObjUtil {
 
     }
 
+    /**
+     * Gets getter method.
+     *
+     * @param c     the c
+     * @param field the field
+     * @return the getter method
+     */
     public static Method getGetterMethod(Class<?> c, String field) {
 
         try {
@@ -158,6 +225,13 @@ public class ValidationObjUtil {
         }
     }
 
+    /**
+     * Gets value.
+     *
+     * @param obj   the obj
+     * @param field the field
+     * @return the value
+     */
     public static Object getValue(Object obj, String field) {
         Method getter = getGetterMethod(obj.getClass(), field);
 
@@ -168,12 +242,26 @@ public class ValidationObjUtil {
         }
     }
 
+    /**
+     * Copy from to.
+     *
+     * @param from       the from
+     * @param to         the to
+     * @param fieldNames the field names
+     */
     public static void copyFromTo(Object from, Object to, String... fieldNames) {
         for (String field : fieldNames) {
             copyFromTo(from, to, field);
         }
     }
 
+    /**
+     * Copy from to.
+     *
+     * @param from      the from
+     * @param to        the to
+     * @param fieldName the field name
+     */
     public static void copyFromTo(Object from, Object to, String fieldName) {
 
         if (from == null || to == null) {
@@ -213,6 +301,12 @@ public class ValidationObjUtil {
     }
 
 
+    /**
+     * Get declared fields string [ ].
+     *
+     * @param baseClass the base class
+     * @return the string [ ]
+     */
     public static String[] getDeclaredFields(Class<?> baseClass) {
 
         Method[] methods = baseClass.getMethods();
@@ -231,6 +325,14 @@ public class ValidationObjUtil {
     }
 
 
+    /**
+     * Obj deep copy object.
+     *
+     * @param from       the from
+     * @param to         the to
+     * @param copyFields the copy fields
+     * @return the object
+     */
     public static Object objDeepCopy(Object from, Object to, String... copyFields) {
         if (from == null || to == null) {
             log.error("object deep copy from or to is null ");
@@ -244,10 +346,25 @@ public class ValidationObjUtil {
         return to;
     }
 
+    /**
+     * Object deep copy with white list t.
+     *
+     * @param <T>        the type parameter
+     * @param from       the from
+     * @param to         the to
+     * @param copyFields the copy fields
+     * @return the t
+     */
     public static <T> T objectDeepCopyWithWhiteList(Object from, Object to, String... copyFields) {
         return (T) to.getClass().cast(objDeepCopy(from, to, copyFields));
     }
 
+    /**
+     * Is getter method boolean.
+     *
+     * @param m the m
+     * @return the boolean
+     */
     public static boolean isGetterMethod(Method m) {
 
         String methodName = m.getName();
@@ -266,6 +383,15 @@ public class ValidationObjUtil {
         return true;
     }
 
+    /**
+     * Object deep copy with black list t.
+     *
+     * @param <T>         the type parameter
+     * @param from        the from
+     * @param to          the to
+     * @param blockFields the block fields
+     * @return the t
+     */
     public static <T> T objectDeepCopyWithBlackList(Object from, Object to, String... blockFields) {
 
         if (to == null) {
@@ -294,6 +420,16 @@ public class ValidationObjUtil {
 
     }
 
+    /**
+     * Object deep copy with black list t.
+     *
+     * @param <T>         the type parameter
+     * @param from        the from
+     * @param to          the to
+     * @param baseClass   the base class
+     * @param blockFields the block fields
+     * @return the t
+     */
     public static <T> T objectDeepCopyWithBlackList(Object from, Object to, Class<?> baseClass, String... blockFields) {
 
         String[] bFields = getDeclaredFields(baseClass);
@@ -302,16 +438,41 @@ public class ValidationObjUtil {
         return objectDeepCopyWithBlackList(from, to, bFields);
     }
 
+    /**
+     * Object deep copy with black list t.
+     *
+     * @param <T>         the type parameter
+     * @param from        the from
+     * @param toClass     the to class
+     * @param blockFields the block fields
+     * @return the t
+     */
     public static <T> T objectDeepCopyWithBlackList(Object from, Class<T> toClass, String... blockFields) {
         Object to = getNewInstance(toClass);
         return objectDeepCopyWithBlackList(from, to, blockFields);
     }
 
+    /**
+     * Object deep copy with black list t.
+     *
+     * @param <T>         the type parameter
+     * @param from        the from
+     * @param toClass     the to class
+     * @param baseClass   the base class
+     * @param blockFields the block fields
+     * @return the t
+     */
     public static <T> T objectDeepCopyWithBlackList(Object from, Class<T> toClass, Class<?> baseClass, String... blockFields) {
         Object to = getNewInstance(toClass);
         return objectDeepCopyWithBlackList(from, to, baseClass, blockFields);
     }
 
+    /**
+     * Gets object size.
+     *
+     * @param value the value
+     * @return the object size
+     */
     public static Double getObjectSize(Object value) {
 
         double v = 1;

@@ -15,11 +15,17 @@ import org.springframework.http.HttpStatus;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Validation rule store.
+ */
 public class ValidationRuleStore {
 
     @Getter
     private List<ValidationRule> rules;
 
+    /**
+     * Instantiates a new Validation rule store.
+     */
     public ValidationRuleStore() {
         super();
 
@@ -38,6 +44,12 @@ public class ValidationRuleStore {
         this.addRule(new ValidationRule(BasicCheckRule.Pattern, StandardValueType.STRING, new PatternCheck()).assistType(new AssistType().string()));
     }
 
+    /**
+     * Gets validation checker.
+     *
+     * @param rule the rule
+     * @return the validation checker
+     */
     public BaseValidationCheck getValidationChecker(ValidationRule rule) {
         ValidationRule existRule = this.rules.stream().filter(r -> r.getRuleName().equals(rule.getRuleName())).findFirst().orElse(null);
         if (existRule == null) {
@@ -46,6 +58,12 @@ public class ValidationRuleStore {
         return existRule.getValidationCheck();
     }
 
+    /**
+     * Add rule validation rule store.
+     *
+     * @param rules the rules
+     * @return the validation rule store
+     */
     public ValidationRuleStore addRule(ValidationRule... rules) {
         for (ValidationRule rule : rules) {
             this.addRule(rule);
@@ -53,6 +71,12 @@ public class ValidationRuleStore {
         return this;
     }
 
+    /**
+     * Add rule validation rule store.
+     *
+     * @param rule the rule
+     * @return the validation rule store
+     */
     public synchronized ValidationRuleStore addRule(ValidationRule rule) {
         rule.setOrderIdx(this.rules.size());
         this.rules.add(rule);
