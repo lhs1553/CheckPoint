@@ -40,7 +40,7 @@ public class MethodSyncor {
     public void updateMethodKeyAsync() {
         new Thread(() -> {
             this.updateMethodKey();
-        }).run();
+        }).start();
     }
 
     private void updateMethodKey() {

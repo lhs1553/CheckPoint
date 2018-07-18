@@ -86,7 +86,8 @@ public class ValidationStore {
      */
     public List<ValidationData> getValidationDatas(ParamType paramType, String key) {
         if (this.urlMap == null || this.validationDataRuleListMap == null) {
-            refresh();
+            log.info("url map is empty :: " + key );
+            return null;
         }
 
         if (key == null || paramType == null) {
