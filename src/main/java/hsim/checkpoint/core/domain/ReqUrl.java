@@ -24,6 +24,9 @@ public class ReqUrl {
      * @param url    the url
      */
     public ReqUrl(String method, String url) {
+        while(url.endsWith("/")){
+            url = url.substring(0, url.length() -1);
+        }
         this.method = method;
         this.url = url;
     }
