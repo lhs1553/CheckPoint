@@ -47,6 +47,7 @@ public class MsgSettingController {
      */
     @GetMapping("/setting/scan/{maxdeeplevel}")
     public void annotationScan(@PathVariable int maxdeeplevel, HttpServletRequest req, HttpServletResponse res) {
+        this.validationSessionComponent.sessionCheck(req);
         this.msgSaver.annotationScan(maxdeeplevel);
     }
 
@@ -71,7 +72,7 @@ public class MsgSettingController {
      */
     @GetMapping("/setting/download/api/json/all")
     public void downloadApiJsonAll(HttpServletRequest req, HttpServletResponse res) {
-        //this.validationSessionComponent.sessionCheck(req);
+        this.validationSessionComponent.sessionCheck(req);
         List<ValidationData> list = this.msgSettingService.getAllValidationData();
         ValidationFileUtil.sendFileToHttpServiceResponse("validation.json", list, res);
     }
@@ -86,7 +87,7 @@ public class MsgSettingController {
      */
     @GetMapping("/setting/download/api/json")
     public void downloadApiJson(HttpServletRequest req, @RequestParam("method") String method, @RequestParam("url") String url, HttpServletResponse res) {
-        //this.validationSessionComponent.sessionCheck(req);
+        this.validationSessionComponent.sessionCheck(req);
         url = new String(Base64.getDecoder().decode(url));
         List<ValidationData> list = this.msgSettingService.getValidationData(method, url);
         ValidationFileUtil.sendFileToHttpServiceResponse(method + url.replaceAll("/", "-") + ".json", list, res);
@@ -100,7 +101,7 @@ public class MsgSettingController {
      */
     @GetMapping("/setting/download/api/excel/all")
     public void downloadApiAll(HttpServletRequest req, HttpServletResponse res) {
-        //this.validationSessionComponent.sessionCheck(req);
+        this.validationSessionComponent.sessionCheck(req);
         PoiWorkBook workBook = this.msgExcelService.getAllExcels();
         workBook.writeFile("ValidationApis_" + System.currentTimeMillis(), res);
     }
@@ -115,7 +116,7 @@ public class MsgSettingController {
      */
     @GetMapping("/setting/download/api/excel")
     public void downloadApi(HttpServletRequest req, @RequestParam("method") String method, @RequestParam("url") String url, HttpServletResponse res) {
-        //this.validationSessionComponent.sessionCheck(req);
+        this.validationSessionComponent.sessionCheck(req);
         url = new String(Base64.getDecoder().decode(url));
         PoiWorkBook workBook = this.msgExcelService.getExcel(method, url);
         workBook.writeFile("ValidationApis_" + System.currentTimeMillis(), res);

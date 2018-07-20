@@ -73,12 +73,16 @@ public class PoiWorkSheet {
         return this.sheet.getRow(this.sheet.getLastRowNum());
     }
 
+    private String checkSheetName(String sheetName){
+        return sheetName.replaceAll("\\*", "");
+    }
+
     private void init(PoiWorkBook workBook, String sheetName) {
 
         this.style = new PoiCellStyle(workBook);
 
         if (sheetName != null) {
-            this.sheet = workBook.getWorkBook().createSheet(sheetName);
+            this.sheet = workBook.getWorkBook().createSheet(this.checkSheetName(sheetName));
         } else {
             this.sheet = workBook.getWorkBook().createSheet();
         }

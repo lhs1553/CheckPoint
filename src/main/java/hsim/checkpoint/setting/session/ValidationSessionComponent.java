@@ -63,6 +63,13 @@ public class ValidationSessionComponent {
             }
         }
 
+        if ( req.getParameter("token") != null){
+            String token = req.getParameter("token");
+            if(this.validationSessionCheck(token)){
+                return;
+            }
+        }
+
         throw new ValidationLibException("UnAuthorization", HttpStatus.UNAUTHORIZED);
     }
 
@@ -90,6 +97,7 @@ public class ValidationSessionComponent {
         if (!this.validationConfig.getAuthToken().equals(info.getToken())) {
             throw new ValidationLibException("UnAuthorization", HttpStatus.UNAUTHORIZED);
         }
+        req.getSession();
 
         return this.createSession(req, res);
     }
