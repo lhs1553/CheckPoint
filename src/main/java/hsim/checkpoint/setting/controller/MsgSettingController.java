@@ -38,18 +38,6 @@ public class MsgSettingController {
     private ValidationSessionComponent validationSessionComponent = ComponentMap.get(ValidationSessionComponent.class);
     private MsgSaver msgSaver = ComponentMap.get(MsgSaver.class);
 
-    /**
-     * Annotation scan.
-     *
-     * @param maxdeeplevel the maxdeeplevel
-     * @param req          the req
-     * @param res          the res
-     */
-    @GetMapping("/setting/scan/{maxdeeplevel}")
-    public void annotationScan(@PathVariable int maxdeeplevel, HttpServletRequest req, HttpServletResponse res) {
-        this.validationSessionComponent.sessionCheck(req);
-        this.msgSaver.annotationScan(maxdeeplevel);
-    }
 
     /**
      * Login validation session info.
@@ -64,6 +52,18 @@ public class MsgSettingController {
         return this.validationSessionComponent.checkAuth(info, req, res);
     }
 
+    /**
+     * Annotation scan.
+     *
+     * @param maxdeeplevel the maxdeeplevel
+     * @param req          the req
+     * @param res          the res
+     */
+    @GetMapping("/setting/scan/{maxdeeplevel}")
+    public void annotationScan(@PathVariable int maxdeeplevel, HttpServletRequest req, HttpServletResponse res) {
+        this.validationSessionComponent.sessionCheck(req);
+        this.msgSaver.annotationScan(maxdeeplevel);
+    }
     /**
      * Download api json all.
      *
@@ -193,6 +193,17 @@ public class MsgSettingController {
     public void deleteValidationUrl(HttpServletRequest req, @RequestBody ReqUrl reqUrl) {
         this.validationSessionComponent.sessionCheck(req);
         this.msgSettingService.deleteValidationData(reqUrl);
+    }
+
+    /**
+     * Delete validation url.
+     *
+     * @param req    the req
+     */
+    @DeleteMapping("/setting/delete/all")
+    public void cleanValidationDatas(HttpServletRequest req) {
+        this.validationSessionComponent.sessionCheck(req);
+        this.msgSettingService.deleteAll();
     }
 
 

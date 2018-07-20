@@ -138,6 +138,13 @@ public class MsgSettingServiceImpl implements MsgSettingService {
     }
 
     @Override
+    public void deleteAll() {
+        this.validationDataRepository.deleteAll(this.validationDataRepository.findAll());
+        this.validationDataRepository.flushAndRuleSync();
+        this.validationStore.refresh();
+    }
+
+    @Override
     public void deleteValidationData(ReqUrl url) {
         this.validationDataRepository.deleteAll(this.validationDataRepository.findByMethodAndUrl(url.getMethod(), url.getUrl()));
 
