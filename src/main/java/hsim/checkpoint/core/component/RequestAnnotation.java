@@ -15,6 +15,7 @@ public class RequestAnnotation {
     private PutMapping putMapping;
     private DeleteMapping deleteMapping;
     private GetMapping getMapping;
+    private PatchMapping patchMapping;
 
     /**
      * Instantiates a new Request annotation.
@@ -27,6 +28,7 @@ public class RequestAnnotation {
         this.putMapping = (PutMapping) AnnotationUtil.getAnnotation(method.getAnnotations(), PutMapping.class);
         this.deleteMapping = (DeleteMapping) AnnotationUtil.getAnnotation(method.getAnnotations(), DeleteMapping.class);
         this.getMapping = (GetMapping) AnnotationUtil.getAnnotation(method.getAnnotations(), GetMapping.class);
+        this.patchMapping= (PatchMapping) AnnotationUtil.getAnnotation(method.getAnnotations(), PatchMapping.class);
 
     }
 
@@ -51,6 +53,9 @@ public class RequestAnnotation {
         if (this.getMapping != null) {
             return new RequestMethod[]{(RequestMethod.GET)};
         }
+        if (this.patchMapping!= null) {
+            return new RequestMethod[]{(RequestMethod.PATCH)};
+        }
         return null;
     }
 
@@ -74,6 +79,9 @@ public class RequestAnnotation {
         }
         if (this.getMapping != null) {
             return this.getMapping.value();
+        }
+        if (this.patchMapping!= null) {
+            return this.patchMapping.value();
         }
         return null;
     }
